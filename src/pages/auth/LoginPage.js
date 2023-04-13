@@ -31,6 +31,8 @@ class LoginPage extends React.Component {
         if (return_data.user.password === this.state.password) {
             localStorage.setItem('email', return_data.user.email);
             localStorage.setItem('first_name', return_data.user.first_name);
+            localStorage.setItem('company_code', return_data.user.company_code);
+            window.location.replace('/home');
         } else {
             alert("Error username or password")
         }
