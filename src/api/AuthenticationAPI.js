@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import config from '../configs/config';
 import requestHelper from './helpers/requestHelper';
 const helper = new requestHelper();
 class AuthenticationAPI extends Component {
