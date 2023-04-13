@@ -29,9 +29,6 @@ class AdminBlankPage extends React.Component {
                             </figure>
                             <span>Rajapakshe & Sons</span>
                         </div>
-                        <div class="col-12 col-lg-6 right px-0 text-right">
-                            <a href="view-list-html.html" class="white-bg-btn">View List</a>
-                        </div>
                     </div>
                     <div class="row form-inner">
                         <div class="col-12 col-lg-6">

@@ -12,9 +12,9 @@ class AdminBlankPage extends React.Component {
 
         this.state = {}
     }
-    componentWillMount() {
-        document.body.classList.add('no-sidebar');
-    }
+    // componentWillMount() {
+    //     document.body.classList.add('no-sidebar');
+    // }
     render(){
         return <>
 <div>
@@ -24,14 +24,14 @@ class AdminBlankPage extends React.Component {
 
     <section class="inner-full-section interviewee type-two">
         <div class="container-fluid">
-            <div class="row navbar-row">
+            {/* <div class="row navbar-row">
                 <div class="col-12 col-lg-2 logo">
                     <figure>
                         <img src={logo} class="img-fluid" alt="logo" />
                     </figure>
                 </div>
                 
-            </div>
+            </div> */}
             <div class="row">
                 <div class="col-12 form-block">
                     <div class="row">

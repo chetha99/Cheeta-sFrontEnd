@@ -4,6 +4,7 @@ import office from '../assets/images/office-building-icon.svg'
 import { Divider, Table } from 'antd';
 import logo from "../assets/images/logo-white.png"
 import avatar from '../assets/images/avatar-icon.svg'
+import { Link } from "react-router-dom";
 
 class AdminBlankPage extends React.Component {
     constructor(props){
@@ -33,8 +34,13 @@ class AdminBlankPage extends React.Component {
                             <span>Adam Kannangara</span>
                         </div>
                         <div class="col-12 col-lg-6 right px-0 text-right">
-                            <a href="appraisal-html.html" class="white-bg-btn">Appraisal</a>
-                            <a href="view-list-html.html" class="white-bg-btn">View List</a>
+                        {/* <Link to="/appraisal" class="white-bg-btn">
+                            Appraisal
+                        </Link> */}
+
+                        <Link to="/employee-details" class="white-bg-btn">
+                            View List
+                        </Link>
                         </div>
                     </div>
                     <div class="row form-inner">

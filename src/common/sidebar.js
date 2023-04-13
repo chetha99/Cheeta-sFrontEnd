@@ -6,7 +6,7 @@ import overviewicon from "../assets/images/overview-icon.svg"
 import employeeicon from "../assets/images/employee-icon.svg"
 import profileaddicon from "../assets/images/profile-add-icon.svg"
 import companyicon from "../assets/images/company-icon.svg"
-
+ 
 class Sidebar extends React.Component {
     constructor(props){
         super(props)
@@ -26,37 +26,51 @@ class Sidebar extends React.Component {
             <PerfectScrollbar className="sidebar-items">
             <div class="tab-block">
             <ul class="page-list">
-                            <li class="menu-active">
-                                <a href="admin-overview-html.html">
+                            {/* <li class="menu-active"> */}
+                            <li>
+                            <Link to="/admin-overview" >
                                     <figure>
                                         <img src={overviewicon} class="img-fluid" alt="icon" />
                                     </figure>
                                     <span>Overview</span>
-                                </a>
+                            </Link>
+                            
                             </li>
                             <li>
-                                <a href="employee-details-html.html">
+                            <Link to="/employee-details">
                                     <figure>
                                         <img src={employeeicon} class="img-fluid" alt="icon" />
                                     </figure>
                                     <span>Employee Details</span>
-                                </a>
+                            </Link>
+                            
                             </li>
                             <li>
-                                <a href="interviewee-details-html.html">
+                            <Link to="/interviewee-details" target="_blank">
+                                    <figure>
+                                        <img src={profileaddicon} class="img-fluid" alt="icon" />
+                                    </figure>
+                                    <span>AI Test</span>
+                            </Link>
+                            
+                            </li>
+                            <li>
+                            <Link to="/appraisal">
                                     <figure>
                                         <img src={profileaddicon} class="img-fluid" alt="icon" />
                                     </figure>
                                     <span>Interviewee Details</span>
-                                </a>
+                            </Link>
+                            
                             </li>
                             <li>
-                                <a href="company-details-html.html">
+                            <Link to="/company-details">
                                     <figure>
                                         <img src={companyicon} class="img-fluid" alt="icon" />
                                     </figure>
                                     <span>Company Details</span>
-                                </a>
+                            </Link>
+                            
                             </li>
                         </ul>
                         <button type="button" class="secondary-btn s-button">Sign Out</button>
