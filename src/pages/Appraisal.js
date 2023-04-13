@@ -122,8 +122,10 @@ class AdminBlankPage extends React.Component {
     render(){
 
         const { data } = this.state;
-
-        console.log(data)
+        const checkbox = document.querySelector('#Training');
+        if(data?.profile !== null && data?.profile !== undefined){
+            checkbox.checked = data?.profile.training_completion;
+        }
         return <>
 <div>
 <main class="main-wrapper" role="main">
@@ -157,7 +159,7 @@ class AdminBlankPage extends React.Component {
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" id="email" name="email" placeholder="adam@email.com" defaultValue={data?.profile.email} required />
+                                <input type="email" id="email" name="email" placeholder="adam@email.com" defaultValue={data?.profile.email} readOnly required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
@@ -198,15 +200,15 @@ class AdminBlankPage extends React.Component {
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
-                        <div class="form-group">
-    <label for="Training">Training Completion</label>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="Training" name="Training" value="1" />
-      <label class="form-check-label" for="Training">
-        Completed
-      </label>
-    </div>
-  </div>
+                            <div class="form-group">
+                                <label for="Training">Training Completion</label>
+                                <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="Training" name="Training" value="1" />
+                                <label class="form-check-label" for="Training">
+                                    Completed
+                                </label>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="col-12 btn-col">

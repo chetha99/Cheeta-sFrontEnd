@@ -73,7 +73,9 @@ class Sidebar extends React.Component {
                             
                             </li>
                         </ul>
-                        <button type="button" class="secondary-btn s-button">Sign Out</button>
+                        <Link to="/">
+                            <button type="button" class="secondary-btn s-button">Sign Out</button>
+                        </Link>
                     </div>
             </PerfectScrollbar>
            
