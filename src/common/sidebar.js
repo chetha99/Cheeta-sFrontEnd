@@ -55,11 +55,11 @@ class Sidebar extends React.Component {
                             
                             </li>
                             <li>
-                            <Link to="/appraisal">
+                            <Link to="/interviewee-details-2">
                                     <figure>
                                         <img src={profileaddicon} class="img-fluid" alt="icon" />
                                     </figure>
-                                    <span>Interviewee Details</span>
+                                    <span>Add Employee Details</span>
                             </Link>
                             
                             </li>
