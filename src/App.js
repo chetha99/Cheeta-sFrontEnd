@@ -17,10 +17,10 @@ function App() {
   return (
         <Router>
             <Routes>
-                <Route exact path='/' element={<AdminOverview/>} /> 
-                <Route exact path='/login' element={<LoginPage/>} />
+                {/* <Route exact path='/' element={<AdminOverview/>} />  */}
+                <Route exact path='/' element={<LoginPage/>} />
                 <Route exact path='/signup' element={<Signup/>} />
-                <Route exact path='/blank-page' element={<AdminBlankPage/>} />
+                <Route exact path='/home' element={<AdminBlankPage/>} />
                 <Route exact path='/admin-overview' element={<AdminOverview/>} />
                 <Route exact path='/appraisal' element={<Appraisal/>} />
                 <Route exact path='/company-details' element={<CompanyDetails/>} />

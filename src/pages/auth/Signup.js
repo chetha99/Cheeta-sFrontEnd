@@ -55,7 +55,7 @@ class ResetPassword extends React.Component {
                             <input type="submit" class="primary-btn" name="createaccount" value="Create Account" />
                         </div>
                     </form>
-                    <p>Already a member? <Link to={'/login'}> Login</Link></p>
+                    <p>Already a member? <Link to={'/'}> Login</Link></p>
                 </div>
             </div>
         </div>
