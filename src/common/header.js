@@ -2,15 +2,15 @@ import React from "react";
 import profileimg from '../assets/images/profile-img.png'
 
 class Header extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
 
         this.state = {
-
+            fullName: localStorage.getItem('first_name') + " " + localStorage.getItem('last_name')
         }
     }
 
-    render(){
+    render() {
         return <nav className="navbar navbar-expand-lg navbar-light fixed-top">
             <div className="container-fluid">
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>
@@ -27,12 +27,12 @@ class Header extends React.Component {
                             </div>
                         </li>
                         <li className="nav-item ">
-                        <div class="profile-info flex">
-                                    <p>Jones Ferdinand</p>
-                                    <figure>
-                                        <img src={profileimg} class="img-fluid" alt="img" />
-                                    </figure>
-                                </div>
+                            <div class="profile-info flex">
+                                <p>{this.state.fullName}</p>
+                                <figure>
+                                    <img src={profileimg} class="img-fluid" alt="img" />
+                                </figure>
+                            </div>
                         </li>
                     </ul>
                 </div>
