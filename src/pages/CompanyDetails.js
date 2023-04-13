@@ -9,7 +9,14 @@ class AdminBlankPage extends React.Component {
         this.state = {}
     }
 
+    componentDidMount() {
+        // call the code here; abd change the selectedEmploye
+        const data = localStorage.getItem('selectedEmployee'); 
+        
+    }
+
     render(){
+
         return <>
 <div>
 <h1 hidden>RecruIT | Company Details</h1>
@@ -27,7 +34,7 @@ class AdminBlankPage extends React.Component {
                             <figure>
                                 <img src={office} class="img-fluid" alt="icon" />
                             </figure>
-                            <span>Rajapakshe & Sons</span>
+                            <span>Assign the Code here</span>
                         </div>
                     </div>
                     <div class="row form-inner">
