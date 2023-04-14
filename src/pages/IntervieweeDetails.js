@@ -14,9 +14,14 @@ class AdminBlankPage extends React.Component {
         fetch(`http://127.0.0.1:8000/employee_profiles/${email}`)
         .then(response => response.json())
         .then(data => {
-            // console.log(data)
-            localStorage.setItem("EmplyeeInfo", JSON.stringify(data.profile));
-            window.location.assign("http://localhost:3000/interviewee-details-part-2");
+            console.log(data)
+            if(data?.detail === "Employee profile not found"){
+                alert("email not found")
+            }else{
+
+                localStorage.setItem("EmplyeeInfo", JSON.stringify(data.profile));
+                window.location.assign("http://localhost:3000/interviewee-details-part-2");
+            }
         })
         .catch(error => {
             console.log(error);
