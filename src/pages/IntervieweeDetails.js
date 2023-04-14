@@ -7,6 +7,22 @@ import interviewee from '../assets/images/interviewee-left-bg.png'
 import './../assets/css/profile.css';
 
 class AdminBlankPage extends React.Component {
+
+    proceedFun = () => {
+        const email= document.getElementById('result').value;
+
+        fetch(`http://127.0.0.1:8000/employee_profiles/${email}`)
+        .then(response => response.json())
+        .then(data => {
+            // console.log(data)
+            localStorage.setItem("EmplyeeInfo", JSON.stringify(data.profile));
+            window.location.assign("http://localhost:3000/interviewee-details-part-2");
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    
+    }
     constructor(props){
         super(props);
 
@@ -54,15 +70,15 @@ class AdminBlankPage extends React.Component {
 end of the<br/> assessment at the end of the test below.<br/><a href="#">Link</a></p>
                         </div>
                         <div class="col-12 col-lg-4 btn-col">
-                            <form>
+                            {/* <form> */}
                                 <div class="form-group">
-                                    <input type="text" id="result" name="result" placeholder="Type your Result here" />
+                                    <input type="text" id="result" name="result" placeholder="candidate's email address" />
                                 </div>
                                 <br/>
                                 <div class="form-group">
-                                    <input type="submit" class="primary-btn" name="save" value="Proceed" />
+                                    <input type="submit"  onClick={this.proceedFun} class="primary-btn" name="save" value="Proceed" />
                                 </div>
-                            </form>
+                            {/* </form> */}
                         </div>
                     </div>
                 </div>

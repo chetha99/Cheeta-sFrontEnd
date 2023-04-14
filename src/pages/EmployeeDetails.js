@@ -33,7 +33,6 @@ const columns = [
         <a
           className="btn btn-xs btn-info"
           onClick={() => {
-            console.log(record)
             localStorage.setItem("selectedEmployee", JSON.stringify(record.email));
           }}
         >
