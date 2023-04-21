@@ -18,9 +18,9 @@ class AdminBlankPage extends React.Component {
             EmpData: [],
         }
     }
-    componentWillMount() {
-      document.body.classList.add('no-sidebar');
-  }
+//     componentWillMount() {
+//       document.body.classList.add('no-sidebar');
+//   }
   componentDidMount() {
     const infoData = JSON.parse(localStorage.getItem('EmplyeeInfo')); 
     this.setState({ EmpData: infoData});
@@ -77,14 +77,16 @@ class AdminBlankPage extends React.Component {
             const per = model_accuracy.split("Accuracy ")
             const per2 = per[1].split("%")
 
-            const Team_capability_score =  parseFloat((value*0.7)+parseFloat(per2[0]*0.003))
+            const Team_capability_score =  parseFloat((value*0.7)+parseFloat(per2[0]*0.003));
+
             const payload = {
                 "name": infoData?.first_name + infoData?.last_name,
                 "email": infoData?.email,
                 "designation": infoData?.designation,
                 "Team_capability_score": Team_capability_score*100,
                 "personality_type": infoData?.personality_type,
-                "model_percentage": parseFloat(per2[0])
+                "model_percentage": parseFloat(per2[0]),
+                "status": value
               };
 
             
@@ -98,7 +100,36 @@ class AdminBlankPage extends React.Component {
         )
         .then(response => response.json())
         .then(data2 => {
-            alert(`Model: ${model_accuracy}, \nPersonality Type: ${infoData?.personality_type}, \nStatus: ${data.status}, Team Capability Score: ${payload?.Team_capability_score}`)
+            const url = 'http://127.0.0.1:8000/employee_profiles';
+
+            const userData = {
+            first_name: infoData?.first_name,
+            last_name: infoData?.last_name,
+            email: infoData?.email,
+            Team_capability_score: Team_capability_score*100,
+            designation: infoData?.designation,
+            personality_type: infoData?.personality_type,
+            civil_status: infoData?.civil_status,
+            status: infoData?.status,
+            project_team: infoData?.project_team,
+            training_completion: infoData?.training_completion,
+            health_assessment: infoData?.health_assessment
+            };
+
+            fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+            })
+            .then(response => response.json())
+            .then(data2 => {
+                alert(`Model: ${model_accuracy}, \nPersonality Type: ${infoData?.personality_type}, \nStatus: ${data.status}, Team Capability Score: ${payload?.Team_capability_score}`)
+
+            })
+            .catch(error => console.error(error));
+
 
         })
         .catch(error => {

@@ -15,6 +15,8 @@ class Sidebar extends React.Component {
     }
 
     render(){
+        const userType = localStorage.getItem("userType")
+        console.log(userType);
         return <div className="border-end sidenav" id="sidebar-wrapper">
             <div className="sidebar-heading border-bottom ">
                 <Link to="/" className="logo-back">
@@ -27,51 +29,81 @@ class Sidebar extends React.Component {
             <div class="tab-block">
             <ul class="page-list">
                             {/* <li class="menu-active"> */}
-                            <li>
-                            <Link to="/admin-overview" >
-                                    <figure>
-                                        <img src={overviewicon} class="img-fluid" alt="icon" />
-                                    </figure>
-                                    <span>Overview</span>
-                            </Link>
+                            {userType === "Staff" && 
+                                <>
+                                
+                                <li>
+                                <Link to="/admin-overview" >
+                                        <figure>
+                                            <img src={overviewicon} class="img-fluid" alt="icon" />
+                                        </figure>
+                                        <span>Overview</span>
+                                </Link>
+                                
+                                </li>
+                                <li>
+                                <Link to="/employee-details">
+                                        <figure>
+                                            <img src={employeeicon} class="img-fluid" alt="icon" />
+                                        </figure>
+                                        <span>Employee Details</span>
+                                </Link>
+                                
+                                </li>
+                                {/* <li>
+                                <Link to="/interviewee-details" target="_blank">
+                                        <figure>
+                                            <img src={profileaddicon} class="img-fluid" alt="icon" />
+                                        </figure>
+                                        <span>AI Test</span>
+                                </Link>
+                                
+                                </li> */}
+                                {/* <li>
+                                <Link to="/interviewee-details-2">
+                                        <figure>
+                                            <img src={profileaddicon} class="img-fluid" alt="icon" />
+                                        </figure>
+                                        <span>Add Employee Details</span>
+                                </Link>
+                                
+                                </li> */}
+                                <li>
+                                <Link to="/company-details">
+                                        <figure>
+                                            <img src={companyicon} class="img-fluid" alt="icon" />
+                                        </figure>
+                                        <span>Company Details</span>
+                                </Link>
+                                
+                                </li>
+                                </>
+                            }
+
+                                {userType === "User" && 
+                                <>
+                                
+                                {/* <li>
+                                <Link to="/interviewee-details" target="_blank">
+                                        <figure>
+                                            <img src={profileaddicon} class="img-fluid" alt="icon" />
+                                        </figure>
+                                        <span>AI Test</span>
+                                </Link>
+                                
+                                </li> */}
+                                <li>
+                                <Link to="/appraisalCopy">
+                                        <figure>
+                                            <img src={profileaddicon} class="img-fluid" alt="icon" />
+                                        </figure>
+                                        <span>Your Details</span>
+                                </Link>
+                                
+                                </li>
+                                </>
+                            }
                             
-                            </li>
-                            <li>
-                            <Link to="/employee-details">
-                                    <figure>
-                                        <img src={employeeicon} class="img-fluid" alt="icon" />
-                                    </figure>
-                                    <span>Employee Details</span>
-                            </Link>
-                            
-                            </li>
-                            <li>
-                            <Link to="/interviewee-details" target="_blank">
-                                    <figure>
-                                        <img src={profileaddicon} class="img-fluid" alt="icon" />
-                                    </figure>
-                                    <span>AI Test</span>
-                            </Link>
-                            
-                            </li>
-                            <li>
-                            <Link to="/interviewee-details-2">
-                                    <figure>
-                                        <img src={profileaddicon} class="img-fluid" alt="icon" />
-                                    </figure>
-                                    <span>Add Employee Details</span>
-                            </Link>
-                            
-                            </li>
-                            <li>
-                            <Link to="/company-details">
-                                    <figure>
-                                        <img src={companyicon} class="img-fluid" alt="icon" />
-                                    </figure>
-                                    <span>Company Details</span>
-                            </Link>
-                            
-                            </li>
                         </ul>
                         <Link to="/">
                             <button type="button" class="secondary-btn s-button">Sign Out</button>

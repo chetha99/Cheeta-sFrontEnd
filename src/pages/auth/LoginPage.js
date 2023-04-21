@@ -29,11 +29,22 @@ class LoginPage extends React.Component {
         event.preventDefault();
         const return_data = await auth.LoginAPI(this.state.useername);
         if (return_data.user.password === this.state.password) {
+            if(return_data.user.email === "admin@gmail.com"){
+                localStorage.setItem('userType', "Staff");
+            }else{
+                localStorage.setItem('userType', "User");
+            }
             localStorage.setItem('email', return_data.user.email);
             localStorage.setItem('first_name', return_data.user.first_name);
             localStorage.setItem('last_name', return_data.user.last_name);
             localStorage.setItem('company_code', return_data.user.company_code);
-            window.location.replace('/home');
+
+            if(return_data.user.email === "admin@gmail.com"){
+                window.location.replace('/admin-overview');
+            }else{
+                localStorage.setItem("selectedEmployee", JSON.stringify(return_data.user.email));
+                window.location.replace('/interviewee-detailsCopy');
+            }
         } else {
             alert("Error username or password")
         }

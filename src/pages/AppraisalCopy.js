@@ -147,13 +147,13 @@ class AdminBlankPage extends React.Component {
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" id="firstname" name="firstname" placeholder="Adam" defaultValue={data?.profile.first_name} required />
+                                <input type="text" id="firstname" name="firstname" placeholder="Adam" defaultValue={data?.profile.first_name} readOnly required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" id="lastname" name="lastname" placeholder="Kannangara" defaultValue={data?.profile.last_name} required />
+                                <input type="text" id="lastname" name="lastname" placeholder="Kannangara" defaultValue={data?.profile.last_name} readOnly required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
@@ -165,46 +165,46 @@ class AdminBlankPage extends React.Component {
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Designation</label>
-                                <input type="text" id="designation" name="designation" placeholder="Project Manager" defaultValue={data?.profile.designation} required />
+                                <input type="text" id="designation" name="designation" placeholder="Project Manager" defaultValue={data?.profile.designation} readOnly required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Personality Type</label>
-                                <input type="text" id="personality" name="personality" placeholder="Lorem ipsum"  defaultValue={data?.profile.personality_type} required />
+                                <input type="text" id="personality" name="personality" placeholder="Lorem ipsum" defaultValue={data?.profile.personality_type} readOnly required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label>Team Capability Score</label>
-                                <input type="text" id="teamcapability" name="teamcapability" placeholder="80%" defaultValue={data?.profile.Team_capability_score} required />
+                                <label><b>Team Capability Score</b></label>
+                                <input type="text" id="teamcapability" name="teamcapability" placeholder="80%" defaultValue={data?.profile.Team_capability_score} readOnly required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label>Status</label>
-                                <input type="text" id="status" name="status" placeholder="Employed" defaultValue={data?.profile.status} required />
+                                <label><b>Status</b></label>
+                                <input type="text" id="status" name="status" placeholder="Employed" defaultValue={data?.profile.status} readOnly required />
                             </div>
                         </div>
                         
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Civil Status*</label>
-                                <input type="text" id="civilstatus" name="civilstatus" placeholder="Lorem ipsum" defaultValue={data?.profile.civil_status} required />
+                                <input type="text" id="civilstatus" name="civilstatus" placeholder="Lorem ipsum" defaultValue={data?.profile.civil_status} readOnly required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Project Team</label>
-                                <input type="text" id="team" name="team" placeholder="Lorem ipsum" defaultValue={data?.profile.project_team} required/>
+                                <input type="text" id="team" name="team" placeholder="Lorem ipsum" defaultValue={data?.profile.project_team} readOnly required/>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
-                            <div class="form-group">
+                            <div class="form-group" >
                                 <label for="Training">Training Completion</label>
                                 <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="Training" name="Training" value="1" />
-                                <label class="form-check-label" for="Training">
+                                <input class="form-check-input" type="checkbox" id="Training" name="Training" value="1" disabled={true}/>
+                                <label class="form-check-label" for="Training" disabled={true}>
                                     Completed
                                 </label>
                                 </div>
@@ -212,7 +212,7 @@ class AdminBlankPage extends React.Component {
                         </div>
                         
                         <div class="col-12 btn-col">
-                            <input type="submit"  onClick={this.submitFun} class="primary-btn" name="save" value="Save" />
+                            {/* <input type="submit"  onClick={this.submitFun} class="primary-btn" name="save" value="Save" /> */}
                         </div>
                     </div>
                 </div>

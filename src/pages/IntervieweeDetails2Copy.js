@@ -1,5 +1,7 @@
 import React from "react";
 import adminLayout from "../hoc/adminLayout"
+import logo from "../assets/images/logo-white.png"
+
 
 class AdminBlankPage extends React.Component {
 
@@ -9,11 +11,11 @@ class AdminBlankPage extends React.Component {
         const email= document.getElementById('email').value;
         const designation= document.getElementById('designation').value;
         const personality= document.getElementById('personality').value;
-        const teamcapability= document.getElementById('teamcapability').value;
+        // const teamcapability= document.getElementById('teamcapability').value;
         const status= document.getElementById('status').value;
         const civilstatus= document.getElementById('civilstatus').value;
         const team= document.getElementById('team').value;
-        const Training= document.getElementById('Training').checked;
+        // const Training= document.getElementById('Training').checked;
 
         // Perform validation on each input field
         if (firstname === '') {
@@ -46,11 +48,6 @@ class AdminBlankPage extends React.Component {
             return;
         }
 
-        if (teamcapability === '') {
-            alert('Please enter your team capability score');
-            return;
-        }
-
         if (status === '') {
             alert('Please enter your status');
             return;
@@ -71,16 +68,17 @@ class AdminBlankPage extends React.Component {
             first_name: firstname,
             last_name: lastname,
             email: email,
-            Team_capability_score:teamcapability,
+            Team_capability_score:0,
             designation: designation,
             personality_type: personality,
             civil_status: civilstatus,
-            status: status,
+            status: 'UnEmployed',
             project_team: team,
-            training_completion: Training,
-            health_assessment: 'Excellent'
+            training_completion: false,
+            health_assessment: status
             };
 
+            console.log(userData)
             fetch(url, {
             method: 'POST',
             headers: {
@@ -90,8 +88,21 @@ class AdminBlankPage extends React.Component {
             })
             .then(response => response.json())
             .then(data => {
-                
-                window.location.assign("http://localhost:3000/employee-details");
+                fetch(`http://127.0.0.1:8000/employee_profiles/${email}`)
+                .then(response => response.json())
+                .then(data => {
+                    if(data?.detail === "Employee profile not found"){
+                        alert("email not found")
+                    }else{
+        
+                        localStorage.setItem("EmplyeeInfo", JSON.stringify(data.profile));
+                        window.location.assign("http://localhost:3000/interviewee-details-part-2");
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+               
             })
             .catch(error => console.error(error));
     
@@ -102,114 +113,99 @@ class AdminBlankPage extends React.Component {
 
         this.state = {}
     }
-
-    componentDidMount() {
-        const data = localStorage.getItem('selectedEmployee'); 
-        const localStorageValue = data.replace(/"/g, '');
-
-
-    fetch(`http://127.0.0.1:8000/employee_profiles/${localStorageValue}`)
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ data })
-      })
-      .catch(error => {
-        console.log(error);
-        this.setState({ loading: false });
-      });
+    componentWillMount() {
+        document.body.classList.add('no-sidebar');
     }
 
     render(){
-
-        const { data } = this.state;
-        const checkbox = document.querySelector('#Training');
-        if(data?.profile !== null && data?.profile !== undefined){
-            checkbox.checked = data?.profile.training_completion;
-        }
+        const firstName = localStorage.getItem("first_name");
+        const lastName = localStorage.getItem("last_name");
+        const emailGot = localStorage.getItem("email");
+        const pType = localStorage.getItem("PType");
         return <>
 <div>
-<main class="main-wrapper" role="main">
+<main class="main-wrapper no-sidebar" role="main">
 
     
           
             <div class="row">
                 
                 <div class="col-12 col-lg-12 form-block">
-                    {/* <div class="row top-row">
-                        <div class="col-12 col-lg-6 left px-0">
+                    <div class="row top-row">
+                            <div class="col-12 col-lg-2 logo">
                             <figure>
-                                <img src={avatar} class="img-fluid" alt="icon" />
+                            <img src={logo} alt="logo" />
                             </figure>
-                            <span>Adam Kannangara</span>
-                        </div>
-                    </div> */}
+                            </div>
+                        
+                    </div>
                     <div class="row form-inner">
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" id="firstname" name="firstname" placeholder="Adam" defaultValue={data?.profile.first_name} required />
+                                <input type="text" id="firstname" name="firstname" value={firstName} disabled={true} placeholder={firstName} />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" id="lastname" name="lastname" placeholder="Kannangara" defaultValue={data?.profile.last_name} required />
+                                <input type="text" id="lastname" name="lastname" value={lastName} disabled={true} placeholder={lastName} />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Email</label>
-                                <input type="email" id="email" name="email" placeholder="adam@email.com" defaultValue={data?.profile.email} readOnly required />
+                                <input type="email" id="email" name="email" value={emailGot} disabled={true} placeholder={emailGot} />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Designation</label>
-                                <input type="text" id="designation" name="designation" placeholder="Project Manager" defaultValue={data?.profile.designation} required />
+                                <input type="text" id="designation" name="designation" placeholder="Project Manager" required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Personality Type</label>
-                                <input type="text" id="personality" name="personality" placeholder="Lorem ipsum"  defaultValue={data?.profile.personality_type} required />
+                                <input type="text" id="personality" value={pType} disabled={true} name="personality" placeholder={pType} />
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6">
+                        {/* <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Team Capability Score</label>
-                                <input type="text" id="teamcapability" name="teamcapability" placeholder="80%" defaultValue={data?.profile.Team_capability_score} required />
+                                <input type="text" id="teamcapability" name="teamcapability" placeholder="80%" required />
                             </div>
-                        </div>
+                        </div> */}
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label>Status</label>
-                                <input type="text" id="status" name="status" placeholder="Employed" defaultValue={data?.profile.status} required />
+                                <label>Health Assessment</label>
+                                <input type="text" id="status" name="status" placeholder="Health Assessment" required />
                             </div>
                         </div>
                         
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Civil Status*</label>
-                                <input type="text" id="civilstatus" name="civilstatus" placeholder="Lorem ipsum" defaultValue={data?.profile.civil_status} required />
+                                <input type="text" id="civilstatus" name="civilstatus" placeholder="Civil Status" required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Project Team</label>
-                                <input type="text" id="team" name="team" placeholder="Lorem ipsum" defaultValue={data?.profile.project_team} required/>
+                                <input type="text" id="team" name="team" placeholder="Project Team" required/>
                             </div>
                         </div>
-                        <div class="col-12 col-lg-6">
-                            <div class="form-group">
-                                <label for="Training">Training Completion</label>
-                                <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="Training" name="Training" value="1" />
-                                <label class="form-check-label" for="Training">
-                                    Completed
-                                </label>
-                                </div>
-                            </div>
+                        {/* <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                        <label for="Training">Training Completion</label>
+                        <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="Training" name="Training" value="1" />
+                        <label class="form-check-label" for="Training">
+                            Completed
+                        </label>
                         </div>
+                    </div>
+                        </div> */}
                         
                         <div class="col-12 btn-col">
                             <input type="submit"  onClick={this.submitFun} class="primary-btn" name="save" value="Save" />

@@ -9,24 +9,10 @@ import './../assets/css/profile.css';
 class AdminBlankPage extends React.Component {
 
     proceedFun = () => {
-        const email= document.getElementById('result').value;
+        const ptype= document.getElementById('result').value;
 
-        fetch(`http://127.0.0.1:8000/employee_profiles/${email}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            if(data?.detail === "Employee profile not found"){
-                alert("email not found")
-            }else{
-
-                localStorage.setItem("EmplyeeInfo", JSON.stringify(data.profile));
-                window.location.assign("http://localhost:3000/interviewee-details-part-2");
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    
+        localStorage.setItem("PType", ptype);
+        window.location.assign("http://localhost:3000/interviewee-details-2Copy");
     }
     constructor(props){
         super(props);
@@ -78,7 +64,7 @@ end of the<br/> assessment at the end of the test below.<br/><a href="#">Link</a
                         <div class="col-12 col-lg-4 btn-col">
                             {/* <form> */}
                                 <div class="form-group">
-                                    <input type="text" id="result" name="result" placeholder="candidate's email address" />
+                                    <input type="text" id="result" name="result" placeholder="Submit your Personality Type" />
                                 </div>
                                 <br/>
                                 <div class="form-group">

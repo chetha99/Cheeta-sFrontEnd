@@ -12,7 +12,6 @@ class ResetPassword extends React.Component {
         super(props);
 
         this.state = {
-            companycode: '',
             firstname: '',
             lastname: '',
             email: '',
@@ -32,7 +31,7 @@ class ResetPassword extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         const payload = {
-            company_code: this.state.companycode,
+            company_code: "C001",
             first_name: this.state.firstname,
             last_name: this.state.lastname,
             email: this.state.email,
@@ -42,7 +41,6 @@ class ResetPassword extends React.Component {
             const return_data = await auth.SignupAPI(payload);
             alert("User Created.. Please login with " + payload.email);
             this.setState({
-                companycode: '',
                 firstname: '',
                 lastname: '',
                 email: '',
@@ -75,9 +73,9 @@ class ResetPassword extends React.Component {
                                     </figure>
                                     <h4>Sign Up</h4>
                                     <form onSubmit={this.handleSubmit}>
-                                        <div class="form-group">
+                                        {/* <div class="form-group">
                                             <input type="text" id="companycode" name="companycode" value={this.state.companycode} placeholder="Company Code" required onChange={this.handleChange} />
-                                        </div>
+                                        </div> */}
                                         <div class="form-group">
                                             <input type="text" id="firstname" name="firstname" value={this.state.firstname} placeholder="First Name" required onChange={this.handleChange} />
                                         </div>
