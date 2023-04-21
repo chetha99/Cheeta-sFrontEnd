@@ -22,7 +22,7 @@ class LoginPage extends React.Component {
         this.setState({
             [event.target.name]: event.target.value
         });
-        console.log(event.target.value);
+        // console.log(event.target.value);
     }
 
     async handleSubmit(event) {
@@ -42,8 +42,23 @@ class LoginPage extends React.Component {
             if(return_data.user.email === "admin@gmail.com"){
                 window.location.replace('/admin-overview');
             }else{
+                
                 localStorage.setItem("selectedEmployee", JSON.stringify(return_data.user.email));
-                window.location.replace('/interviewee-detailsCopy');
+                fetch(`http://127.0.0.1:8000/employee_profiles/${return_data.user.email}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        
+                        if(data?.profile){
+                           window.location.replace('/appraisalCopy');
+                        }else {
+                          window.location.replace('/interviewee-detailsCopy');
+                        }
+                        
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+                
             }
         } else {
             alert("Error username or password")

@@ -35,7 +35,6 @@ class AdminBlankPage extends React.Component {
         (
           <>
             {data.map(x=>{
-
               return (
                 <>
                 <CardMain
@@ -45,6 +44,7 @@ class AdminBlankPage extends React.Component {
                   Team_capability_score={x.Team_capability_score}
                   personality_type={x.personality_type}
                   modal_accuracy={x.model_percentage}
+                  status = {x.status}
                 />
                 <br/>
                 <br/>

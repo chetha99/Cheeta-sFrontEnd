@@ -51,7 +51,7 @@ return(
 
     </Col>
     <Col span={10}>
-      <Card title={props.name} bordered={false}>
+      <Card title={props.name}  style={props.status===1?{borderColor: "green", borderWidth:"4px"}:{borderColor: "red", borderWidth:"4px"} }>
             <b> Email: </b> {props.email} <br/>
             <b> Designation: </b> {props.designation} <br/>
             <b> Team Capability Score: </b> {props.Team_capability_score} <br/>

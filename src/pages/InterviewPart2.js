@@ -125,7 +125,7 @@ class AdminBlankPage extends React.Component {
             })
             .then(response => response.json())
             .then(data2 => {
-                alert(`Model: ${model_accuracy}, \nPersonality Type: ${infoData?.personality_type}, \nStatus: ${data.status}, Team Capability Score: ${payload?.Team_capability_score}`)
+                alert(`Model: ${model_accuracy}, \nPersonality Type: ${infoData?.personality_type}, \nStatus: ${value===1? "will stay":"will leave"}, Team Capability Score: ${payload?.Team_capability_score}`)
 
             })
             .catch(error => console.error(error));
