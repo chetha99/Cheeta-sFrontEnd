@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from 'react';
 import adminLayout from "../hoc/adminLayout"
 import office from '../assets/images/office-building-icon.svg'
 import { Col, Divider, Row, Table } from 'antd';
@@ -6,147 +7,155 @@ import logo from "../assets/images/logo-white.png"
 import interviewee from '../assets/images/interviewee-left-bg.png'
 import './../assets/css/profile.css';
 import initModel from "../env/initialModel";
+import { Link } from "react-router-dom";
+import { Radio } from 'antd';
+
+
+
 
 class AdminBlankPage extends React.Component {
 
-    constructor(props){
-        super(props);
+//     constructor(props){
+//         super(props);
 
-        this.state = {
-            jobsBasedOnPersonalityType: [],
-            charactersBasedOnPersonalityType: [],
-            EmpData: [],
-        }
-    }
-//     componentWillMount() {
-//       document.body.classList.add('no-sidebar');
-//   }
-  componentDidMount() {
-    const infoData = JSON.parse(localStorage.getItem('EmplyeeInfo')); 
-    this.setState({ EmpData: infoData});
+//         this.state = {
+//             jobsBasedOnPersonalityType: [],
+//             charactersBasedOnPersonalityType: [],
+//             EmpData: [],
+//         }
+//     }
+// //     componentWillMount() {
+// //       document.body.classList.add('no-sidebar');
+// //   }
+//   componentDidMount() {
+//     const infoData = JSON.parse(localStorage.getItem('EmplyeeInfo')); 
+//     this.setState({ EmpData: infoData});
 
-    fetch(`http://127.0.0.1:8000/predictJobsBasedOnPersonalityType/${infoData.personality_type}`)
-    .then(response => response.json())
-    .then(data => {
-        this.setState({ jobsBasedOnPersonalityType: data});
+//     fetch(`http://127.0.0.1:8000/predictJobsBasedOnPersonalityType/${infoData.personality_type}`)
+//     .then(response => response.json())
+//     .then(data => {
+//         this.setState({ jobsBasedOnPersonalityType: data});
 
-    })
-    .catch(error => {
-        console.log(error);
-        this.setState({ loading: false });
-    });
+//     })
+//     .catch(error => {
+//         console.log(error);
+//         this.setState({ loading: false });
+//     });
     
 
-    fetch(`http://127.0.0.1:8000/predictCharactersBasedOnPersonalityType/${infoData.personality_type}`)
-    .then(response => response.json())
-    .then(data => {
-        this.setState({ charactersBasedOnPersonalityType: data});
-    })
-    .catch(error => {
-        console.log(error);
-        this.setState({ loading: false });
-    });
+//     fetch(`http://127.0.0.1:8000/predictCharactersBasedOnPersonalityType/${infoData.personality_type}`)
+//     .then(response => response.json())
+//     .then(data => {
+//         this.setState({ charactersBasedOnPersonalityType: data});
+//     })
+//     .catch(error => {
+//         console.log(error);
+//         this.setState({ loading: false });
+//     });
 
-    fetch(`http://127.0.0.1:8000/predict_Status`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(initModel)
-          }
-        )
-        .then(response => response.json())
-        .then(data => {
-            const output = data.status === "will stay" ? 0 : 1;
-            const model_accuracy = data.Accuracy
-            function addBinary(a, b) {
-                let sum = a ^ b; 
-                let carry = (a & b) << 1; 
+//     fetch(`http://127.0.0.1:8000/predict_Status`, {
+//             method: 'POST',
+//             headers: {
+//               'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(initModel)
+//           }
+//         )
+//         .then(response => response.json())
+//         .then(data => {
+//             const output = data.status === "will stay" ? 0 : 1;
+//             const model_accuracy = data.Accuracy
+//             function addBinary(a, b) {
+//                 let sum = a ^ b; 
+//                 let carry = (a & b) << 1; 
               
-                if (carry !== 0) {
-                  return addBinary(sum, carry);
-                }
+//                 if (carry !== 0) {
+//                   return addBinary(sum, carry);
+//                 }
               
-                return sum; 
-              }
+//                 return sum; 
+//               }
             
-            const randomNum = Math.round(Math.random());
+//             const randomNum = Math.round(Math.random());
             
-            const value = addBinary(output, randomNum)
+//             const value = addBinary(output, randomNum)
    
-            const per = model_accuracy.split("Accuracy ")
-            const per2 = per[1].split("%")
+//             const per = model_accuracy.split("Accuracy ")
+//             const per2 = per[1].split("%")
 
-            const Team_capability_score =  parseFloat((value*0.7)+parseFloat(per2[0]*0.003));
+//             const Team_capability_score =  parseFloat((value*0.7)+parseFloat(per2[0]*0.003));
 
-            const payload = {
-                "name": infoData?.first_name + infoData?.last_name,
-                "email": infoData?.email,
-                "designation": infoData?.designation,
-                "Team_capability_score": Team_capability_score*100,
-                "personality_type": infoData?.personality_type,
-                "model_percentage": parseFloat(per2[0]),
-                "status": value
-              };
+//             const payload = {
+//                 "name": infoData?.first_name + infoData?.last_name,
+//                 "email": infoData?.email,
+//                 "designation": infoData?.designation,
+//                 "Team_capability_score": Team_capability_score*100,
+//                 "personality_type": infoData?.personality_type,
+//                 "model_percentage": parseFloat(per2[0]),
+//                 "status": value
+//               };
 
             
-            fetch(`http://127.0.0.1:8000/dashboard`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-          }
-        )
-        .then(response => response.json())
-        .then(data2 => {
-            const url = 'http://127.0.0.1:8000/employee_profiles';
+//             fetch(`http://127.0.0.1:8000/dashboard`, {
+//             method: 'POST',
+//             headers: {
+//               'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(payload)
+//           }
+//         )
+//         .then(response => response.json())
+//         .then(data2 => {
+//             const url = 'http://127.0.0.1:8000/employee_profiles';
 
-            const userData = {
-            first_name: infoData?.first_name,
-            last_name: infoData?.last_name,
-            email: infoData?.email,
-            Team_capability_score: Team_capability_score*100,
-            designation: infoData?.designation,
-            personality_type: infoData?.personality_type,
-            civil_status: infoData?.civil_status,
-            status: infoData?.status,
-            project_team: infoData?.project_team,
-            training_completion: infoData?.training_completion,
-            health_assessment: infoData?.health_assessment
-            };
+//             const userData = {
+//             first_name: infoData?.first_name,
+//             last_name: infoData?.last_name,
+//             email: infoData?.email,
+//             Team_capability_score: Team_capability_score*100,
+//             designation: infoData?.designation,
+//             personality_type: infoData?.personality_type,
+//             civil_status: infoData?.civil_status,
+//             status: infoData?.status,
+//             project_team: infoData?.project_team,
+//             training_completion: infoData?.training_completion,
+//             health_assessment: infoData?.health_assessment
+//             };
 
-            fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-            })
-            .then(response => response.json())
-            .then(data2 => {
-                alert(`Model: ${model_accuracy}, \nPersonality Type: ${infoData?.personality_type}, \nStatus: ${value===1? "will stay":"will leave"}, Team Capability Score: ${payload?.Team_capability_score}`)
+//             fetch(url, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify(userData)
+//             })
+//             .then(response => response.json())
+//             .then(data2 => {
+//                 alert(`Model: ${model_accuracy}, \nPersonality Type: ${infoData?.personality_type}, \nStatus: ${value===1? "will stay":"will leave"}, Team Capability Score: ${payload?.Team_capability_score}`)
 
-            })
-            .catch(error => console.error(error));
+//             })
+//             .catch(error => console.error(error));
 
 
-        })
-        .catch(error => {
-            console.log(error);
-        });
+//         })
+//         .catch(error => {
+//             console.log(error);
+//         });
             
-        })
-        .catch(error => {
-            console.log(error);
-        });
+//         })
+//         .catch(error => {
+//             console.log(error);
+//         });
     
     
 
-  }
+//   }
+
+
+
     render(){
 
-        const { jobsBasedOnPersonalityType, charactersBasedOnPersonalityType, EmpData } = this.state;
+        // const { jobsBasedOnPersonalityType, charactersBasedOnPersonalityType, EmpData } = this.state;
 
         return <>
 <div>
@@ -154,7 +163,7 @@ class AdminBlankPage extends React.Component {
 
 <main class="main-wrapper no-sidebar" role="main">
 
-    <section class="inner-full-section interviewee">
+    {/* <section class="inner-full-section interviewee">
         <div class="container-fluid">
             <div class="row navbar-row">
                 <div class="col-12 col-lg-2 logo">
@@ -169,7 +178,7 @@ class AdminBlankPage extends React.Component {
                       
                     </div>
                 </div> */}
-            </div>
+            {/* </div>
             <div class="row">
                 <div class="col-12 col-lg-5 img-block">
                     <figure>
@@ -215,7 +224,131 @@ class AdminBlankPage extends React.Component {
             </div>
         </div>
         </div>
-    </section>
+    </section> */} 
+
+
+<div class="col-12 col-lg-12 form-block">
+                    <div class="row top-row">
+                        <div class="col-12 col-lg-6 left px-0">
+                            <figure>
+                               
+                            </figure>
+                            <span>Rate Interviewee</span>
+                        </div>
+                        <div class="col-12 col-lg-6 right px-0 text-right">
+                        {/* <Link to="/appraisal" class="white-bg-btn">
+                            Appraisal
+                        </Link> */}
+
+                        <Link to="/employee-details" class="white-bg-btn">
+                          Back
+                        </Link>
+                        </div>
+                    </div>
+                   <div className="row">
+                    <div className="col-md-12">
+                        <br/>
+<h4>1. Appearance</h4>
+                    </div>
+                    <div className="col-md-12">
+                        <br/>
+                    <Radio.Group >
+      <Radio value={1}>1</Radio>
+      <Radio value={2}>2</Radio>
+      <Radio value={3}>3</Radio>
+      <Radio value={4}>4</Radio>
+      <Radio value={5}>5</Radio>
+    </Radio.Group>
+                    </div>
+                   </div>
+
+                   <div className="row">
+                    <div className="col-md-12">
+                        <br/>
+<h4>2. Technicak Skills</h4>
+                    </div>
+                    <div className="col-md-12">
+                        <br/>
+                    <Radio.Group >
+      <Radio value={1}>1</Radio>
+      <Radio value={2}>2</Radio>
+      <Radio value={3}>3</Radio>
+      <Radio value={4}>4</Radio>
+      <Radio value={5}>5</Radio>
+    </Radio.Group>
+                    </div>
+                   </div>
+
+                   <div className="row">
+                    <div className="col-md-12">
+                        <br/>
+<h4>3. Qulifications</h4>
+                    </div>
+                    <div className="col-md-12">
+                        <br/>
+                    <Radio.Group >
+      <Radio value={1}>1</Radio>
+      <Radio value={2}>2</Radio>
+      <Radio value={3}>3</Radio>
+      <Radio value={4}>4</Radio>
+      <Radio value={5}>5</Radio>
+    </Radio.Group>
+                    </div>
+                   </div>
+
+                   <div className="row">
+                    <div className="col-md-12">
+                        <br/>
+<h4>4. Job Expectations</h4>
+                    </div>
+                    <div className="col-md-12">
+                        <br/>
+                    <Radio.Group >
+      <Radio value={1}>1</Radio>
+      <Radio value={2}>2</Radio>
+      <Radio value={3}>3</Radio>
+      <Radio value={4}>4</Radio>
+      <Radio value={5}>5</Radio>
+    </Radio.Group>
+                    </div>
+                   </div>
+
+                   <div className="row">
+                    <div className="col-md-12">
+                        <br/>
+<h4>5. Long Tearm Objective</h4>
+                    </div>
+                    <div className="col-md-12">
+                        <br/>
+                    <Radio.Group >
+      <Radio value={1}>1</Radio>
+      <Radio value={2}>2</Radio>
+      <Radio value={3}>3</Radio>
+      <Radio value={4}>4</Radio>
+      <Radio value={5}>5</Radio>
+    </Radio.Group>
+                    </div>
+                   </div>
+
+                   <div className="row">
+                    <div className="col-md-12">
+                        <br/>
+<h4>6. Overoll Rating</h4>
+                    </div>
+                    <div className="col-md-12">
+                        <br/>
+                    <Radio.Group >
+      <Radio value={1}>1</Radio>
+      <Radio value={2}>2</Radio>
+      <Radio value={3}>3</Radio>
+      <Radio value={4}>4</Radio>
+      <Radio value={5}>5</Radio>
+    </Radio.Group>
+                    </div>
+                   </div>
+
+
+                </div>
 
 </main>
 </div>
