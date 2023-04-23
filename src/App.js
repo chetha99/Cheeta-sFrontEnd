@@ -17,6 +17,8 @@ import IntervieweeDetailsCopy from './pages/IntervieweeDetailsCopy';
 import IntervieweeDetails2Copy from './pages/IntervieweeDetails2Copy';
 import AppraisalCopy from './pages/AppraisalCopy';
 
+import RateInterviewee from './pages/RateInterviewee';
+
 
 function App() {
     
@@ -38,6 +40,7 @@ function App() {
                 <Route exact path='/interviewee-details-2' element={<IntervieweeDetails2/>} />
                 <Route exact path='/interviewee-details-2Copy' element={<IntervieweeDetails2Copy/>} />
                 <Route exact path='/single-employee' element={<SingleEmployee/>} />
+                <Route exact path='/rate-interviewee' element={<RateInterviewee/>} />
             </Routes>  
         </Router>
     )
