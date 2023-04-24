@@ -23,7 +23,7 @@ const dataOptions = {
 }
 class AdminBlankPage extends React.Component {
 
-    submitFun= () => {
+    submitFun= (training_data) => { 
         const firstname= document.getElementById('firstname').value;
         const lastname= document.getElementById('lastname').value;
         const email= document.getElementById('email').value;
@@ -33,9 +33,7 @@ class AdminBlankPage extends React.Component {
         const status= document.getElementById('status').value;
         const civilstatus= document.getElementById('civilstatus').value;
         const team= document.getElementById('team').value;
-        // const Training= document.getElementById('Training').checked;
 
-        console.log(document.getElementById('Training'))
 
         // Perform validation on each input field
         if (firstname === '') {
@@ -99,25 +97,25 @@ class AdminBlankPage extends React.Component {
             civil_status: civilstatus,
             status: status,
             project_team: team,
-            // training_completion: Training,
+            training_completion: training_data,
             health_assessment: 'Excellent'
             };
 
+            // console.log(userData)
 
-
-                // fetch(url, {
-                // method: 'POST',
-                // headers: {
-                //     'Content-Type': 'application/json'
-                // },
-                // body: JSON.stringify(userData)
-                // })
-                // .then(response => response.json())
-                // .then(data => {
+                fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+                })
+                .then(response => response.json())
+                .then(data => {
                     
-                //     window.location.assign("http://localhost:3000/employee-details");
-                // })
-                // .catch(error => console.error(error));
+                    window.location.assign("http://localhost:3000/employee-details");
+                })
+                .catch(error => console.error(error));
     
     }
 
@@ -156,7 +154,8 @@ class AdminBlankPage extends React.Component {
             case "SSE":
             case "Senior Software Engineer":
                 const value = dataOptions.data1.concat(dataOptions.data2)
-                this.setState({ designationOptions:value })
+                const uniqueData = [...new Set(value)];
+                this.setState({ designationOptions:uniqueData })
                 break;
             case "Cloud Engineer":
             case "Senior Cloud Engineer":
@@ -177,6 +176,7 @@ class AdminBlankPage extends React.Component {
                 break;
         }
         // this.setState({ designation:data.profile.designation })
+        this.setState({training_data: data.profile.training_completion});
       })
       .catch(error => {
         console.log(error);
@@ -186,11 +186,8 @@ class AdminBlankPage extends React.Component {
 
     render(){
 
-        const { data, designationOptions } = this.state;    
-        // const checkbox = document.querySelector('#Training');
-        // if(data?.profile !== null && data?.profile !== undefined){
-        //     checkbox.checked = data?.profile.training_completion;
-        // }
+        const { data, designationOptions,training_data } = this.state; 
+
         const chnageTrigger = (e) => {
             switch(e.target.value){
                 //
@@ -230,6 +227,22 @@ class AdminBlankPage extends React.Component {
                 case "Cyber Security":
                     this.setState({ designationOptions:dataOptions.data6 })
                     break;
+            }
+        }
+
+        const valueChnage = (e) =>{
+            const value = e.target.value;
+            const checked = e.target.checked;
+
+            let preData = training_data;
+
+            if(checked){
+                preData.push(value);
+                this.setState({training_data:preData});
+            }else{
+                preData = preData.filter(preData => preData !== value);
+                this.setState({training_data:preData});
+
             }
         }
         return <>
@@ -292,7 +305,12 @@ class AdminBlankPage extends React.Component {
                                 <input type="text" id="status" name="status" placeholder="Employed" defaultValue={data?.profile.status} required />
                             </div>
                         </div>
-                        
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label>Health</label>
+                                <input type="text" id="status" name="status" placeholder="Employed" defaultValue={data?.profile.health_assessment} required />
+                            </div>
+                        </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Civil Status*</label>
@@ -310,15 +328,23 @@ class AdminBlankPage extends React.Component {
                             <div class="form-group">
                                 <label for="Training">Training Completion</label>
                                 <div class="form-check">
-                                    {designationOptions?.map(x =>{
-                                        return(
-                                            <>
-                                            <input class="form-check-input" type="checkbox" id="Training" name="Training" value={x} />
-                                            <label class="form-check-label" for="Training">
-                                                {x}
-                                            </label>
-                                            </>
-                                        )
+                                    {/* {console.log(designationOptions)} */}
+                                    {designationOptions?.map((x) =>{
+                                        if ( training_data && training_data.includes(x)) {
+                                            return(
+                                                <>
+                                                <input class="form-check-input" type="checkbox" onChange={valueChnage} id={x} value={x} checked/>
+                                                    {x} <br/>
+                                                </>
+                                            )                                          
+                                        } else {
+                                                return(
+                                                    <>
+                                                    <input class="form-check-input" type="checkbox" onChange={valueChnage} id={x} value={x} />
+                                                        {x} <br/>
+                                                    </>
+                                                )                                          
+                                            }                                        
                                     })}
                                     
                                 </div>
@@ -326,7 +352,9 @@ class AdminBlankPage extends React.Component {
                         </div>
                         
                         <div class="col-12 btn-col">
-                            <input type="submit"  onClick={this.submitFun} class="primary-btn" name="save" value="Save" />
+                            <input type="submit"  onClick={()=>{
+                                this.submitFun(training_data)
+                                }} class="primary-btn" name="save" value="Save" />
                         </div>
                     </div>
                 </div>

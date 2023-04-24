@@ -49,7 +49,7 @@ class LoginPage extends React.Component {
                     .then(data => {
                         
                         if(data?.profile){
-                            if(data?.profile?.status === "employed"){
+                            if(data?.profile?.status === "Employed" || data?.profile?.status === "employed"){
                                 localStorage.setItem('hidden_status', false);
                                 window.location.replace('/appraisalCopy');
                             }else{

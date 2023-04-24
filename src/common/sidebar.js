@@ -17,7 +17,6 @@ class Sidebar extends React.Component {
     render(){
         const userType = localStorage.getItem("userType")
         const hidden_status = localStorage.getItem("hidden_status")
-        console.log(hidden_status)
         return <div className="border-end sidenav" id="sidebar-wrapper">
             <div className="sidebar-heading border-bottom ">
                 <Link to="/" className="logo-back">

@@ -74,7 +74,7 @@ class AdminBlankPage extends React.Component {
             civil_status: civilstatus,
             status: 'UnEmployed',
             project_team: team,
-            training_completion: false,
+            training_completion: [],
             health_assessment: status
             };
 
