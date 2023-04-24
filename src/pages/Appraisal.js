@@ -32,9 +32,10 @@ class AdminBlankPage extends React.Component {
         const teamcapability= document.getElementById('teamcapability').value;
         const status= document.getElementById('status').value;
         const civilstatus= document.getElementById('civilstatus').value;
+        const health_ass= document.getElementById('health_ass').value;
         const team= document.getElementById('team').value;
 
-
+        console.log(health_ass)
         // Perform validation on each input field
         if (firstname === '') {
             alert('Please enter your first name');
@@ -98,7 +99,7 @@ class AdminBlankPage extends React.Component {
             status: status,
             project_team: team,
             training_completion: training_data,
-            health_assessment: 'Excellent'
+            health_assessment: health_ass
             };
 
             // console.log(userData)
@@ -308,7 +309,7 @@ class AdminBlankPage extends React.Component {
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Health</label>
-                                <input type="text" id="status" name="status" placeholder="Employed" defaultValue={data?.profile.health_assessment} required />
+                                <input type="text" id="health_ass" name="health_ass" placeholder="health_ass" defaultValue={data?.profile.health_assessment} required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">

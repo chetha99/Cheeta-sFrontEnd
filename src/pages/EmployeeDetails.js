@@ -1,13 +1,17 @@
 import React from "react";
 import adminLayout from "../hoc/adminLayout"
 import office from '../assets/images/office-building-icon.svg'
-import { Divider, Table } from 'antd';
+import { Divider,Input, Table } from 'antd';
 import { Link } from "react-router-dom";
+
+const { Search } = Input;
 
 const columns = [
   {
     title: 'Name',
     dataIndex: 'name',
+    sorter: (a, b) => a.name.localeCompare(b.name),
+
   },
   {
     title: 'Email',
@@ -16,14 +20,34 @@ const columns = [
   {
     title: 'Project/Team',
     dataIndex: 'project',
+    sorter: (a, b) => a.name.localeCompare(b.name),
+
   },
   {
     title: 'Designation',
     dataIndex: 'designation',
+    sorter: (a, b) => a.name.localeCompare(b.name),
+
   },
   {
     title: 'Status',
     dataIndex: 'status',
+    filters: [
+      { text: 'Employed', value: 'employed' },
+      { text: 'Not Employed', value: 'Not Employed' },
+    ],
+    onFilter: (value, record) => record.status.toLowerCase() === value,
+    render: (status) => (
+      <span style={{ 
+        backgroundColor: status.toLowerCase() !== 'employed' ? 'rgba(255, 100, 100, 0.4)' : 'rgba(100, 255, 100, 0.4)' ,
+        borderRadius: 4,
+        padding: '4px 8px',
+        display: 'inline-block',
+        color: 'black',
+        }}>
+        {status}
+      </span>
+    ),
   },
   {
     title: 'Action',
@@ -64,7 +88,17 @@ const columns = [
       >
         AI Info
       </a>
-    </Link>
+    </Link>&nbsp;
+    <Link to="/rate-interviewee">
+        <a
+          className="btn btn-xs btn-secondary"
+          onClick={() => {
+            localStorage.setItem("selectedEmployee", JSON.stringify(record.email));
+          }}
+        >
+          Rate
+        </a>
+      </Link> 
       </>
     ),
   },

@@ -47,6 +47,7 @@ class ResetPassword extends React.Component {
                 password: '',
                 confirmpassword: ''
             });
+            window.location.assign("http://localhost:3000/");
         } else {
             alert("Password and Confirm password should match");
         }

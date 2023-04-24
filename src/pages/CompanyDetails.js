@@ -120,34 +120,34 @@ class AdminBlankPage extends React.Component {
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Managerial Type</label>
-                                <input type="text" id="firstname" name="firstname" placeholder="Lorem ipsum" defaultValue={dataV?.company?.managerial_type} required />
+                                <input type="text" id="firstname" name="firstname" placeholder="" defaultValue={dataV?.company?.managerial_type} required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Incentive Cycle</label>
-                                <input type="text" id="lastname" name="lastname" placeholder="Lorem ipsum" defaultValue={dataV?.company?.incentive_cycle} required />
+                                <input type="text" id="lastname" name="lastname" placeholder="" defaultValue={dataV?.company?.incentive_cycle} required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Recreational Activities</label>
-                                <input type="text" id="email" name="email" placeholder="Lorem ipsum" defaultValue={dataV?.company?.recreational_activities} required />
+                                <input type="text" id="email" name="email" placeholder="" defaultValue={dataV?.company?.recreational_activities} required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Work Mode</label>
-                                <input type="text" id="designation" name="designation" placeholder="Lorem ipsum"  defaultValue={dataV?.company?.work_mode} required />
+                                <input type="text" id="designation" name="designation" placeholder=""  defaultValue={dataV?.company?.work_mode} required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
                                 <label>Suggested Training For Teams</label>
-                                <input type="text" id="team" name="team" placeholder="Lorem ipsum" defaultValue={dataV?.company?.suggested_training} />
+                                <input type="text" id="team" name="team" placeholder="" defaultValue={dataV?.company?.suggested_training} />
                         </div>
                         <div class="col-12 col-lg-6">
                                 <label>Training Completion</label>
-                                <input class="complete" type="text" id="Training" name="Training" placeholder="Lorem ipsum" defaultValue={dataV?.company?.training_completion} />
+                                <input class="complete" type="text" id="Training" name="Training" placeholder="" defaultValue={dataV?.company?.training_completion} />
                         </div>
                         <div class="col-12 btn-col">
                             <input type="submit" onClick={this.submitFun} class="primary-btn" name="save" value="Save" />
