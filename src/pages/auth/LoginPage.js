@@ -49,8 +49,15 @@ class LoginPage extends React.Component {
                     .then(data => {
                         
                         if(data?.profile){
-                           window.location.replace('/appraisalCopy');
+                            if(data?.profile?.status === "employed"){
+                                localStorage.setItem('hidden_status', false);
+                                window.location.replace('/appraisalCopy');
+                            }else{
+                                localStorage.setItem('hidden_status', true);
+                                window.location.replace('/home');
+                            }
                         }else {
+                          localStorage.setItem('hidden_status', true);
                           window.location.replace('/interviewee-detailsCopy');
                         }
                         

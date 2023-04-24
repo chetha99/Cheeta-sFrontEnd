@@ -23,51 +23,23 @@ class AdminBlankPage extends React.Component {
 
 <div class="col-12 col-lg-12 form-block">
                    
-                   <div className="row">
+    <div className="row">
                    
-                    <div className="col-md-4">
-                    <div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-   
-   <p>Name:</p>
-   <p>Age:</p>
-   <p>Address:</p>
-   <p>Tel:</p>
-   <p>Fax:</p>
-   <p>Email:</p>
-  </div>
-</div>
-                    </div>
-                    <div className="col-md-4">
-                    <div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-   
-   <p>Name:</p>
-   <p>Age:</p>
-   <p>Address:</p>
-   <p>Tel:</p>
-   <p>Fax:</p>
-   <p>Email:</p>
-  </div>
-</div>
-                    </div>
-                    <div className="col-md-4">
-                    <div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-   
-   <p>Name:</p>
-   <p>Age:</p>
-   <p>Address:</p>
-   <p>Tel:</p>
-   <p>Fax:</p>
-   <p>Email:</p>
-  </div>
-</div>
-                    </div>
-                   </div>
+      <div className="col-md-12">
+        <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+              
+                <p>Name:</p>
+                <p>Age:</p>
+                <p>Address:</p>
+                <p>Tel:</p>
+                <p>Fax:</p>
+                <p>Email:</p>
+              </div>
+          </div>
+        </div>
+    </div>
 
                    <div className="row">
                    

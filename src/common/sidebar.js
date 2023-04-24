@@ -16,6 +16,8 @@ class Sidebar extends React.Component {
 
     render(){
         const userType = localStorage.getItem("userType")
+        const hidden_status = localStorage.getItem("hidden_status")
+        console.log(hidden_status)
         return <div className="border-end sidenav" id="sidebar-wrapper">
             <div className="sidebar-heading border-bottom ">
                 <Link to="/" className="logo-back">
@@ -79,25 +81,15 @@ class Sidebar extends React.Component {
                                 </>
                             }
 
-                                {userType === "User" && 
+                                {userType === "User" && hidden_status === "false" &&
                                 <>
-                                
-                                {/* <li>
-                                <Link to="/interviewee-details" target="_blank">
-                                        <figure>
-                                            <img src={profileaddicon} class="img-fluid" alt="icon" />
-                                        </figure>
-                                        <span>AI Test</span>
-                                </Link>
-                                
-                                </li> */}
                                 <li>
-                                <Link to="/appraisalCopy">
-                                        <figure>
-                                            <img src={profileaddicon} class="img-fluid" alt="icon" />
-                                        </figure>
-                                        <span>Your Details</span>
-                                </Link>
+                                    <Link to="/appraisalCopy">
+                                            <figure>
+                                                <img src={profileaddicon} class="img-fluid" alt="icon" />
+                                            </figure>
+                                            <span>Your Details</span>
+                                    </Link>
                                 
                                 </li>
                                 </>

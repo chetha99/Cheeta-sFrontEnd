@@ -16,6 +16,8 @@ class AdminBlankPage extends React.Component {
             jobsBasedOnPersonalityType: [],
             charactersBasedOnPersonalityType: [],
             EmpData: [],
+            userPermission : localStorage.getItem("userType")
+
         }
     }
 //     componentWillMount() {
@@ -28,7 +30,14 @@ class AdminBlankPage extends React.Component {
     fetch(`http://127.0.0.1:8000/predictJobsBasedOnPersonalityType/${infoData.personality_type}`)
     .then(response => response.json())
     .then(data => {
-        this.setState({ jobsBasedOnPersonalityType: data});
+        const uniqueArr = data?.Predicted_Job.map(JSON.stringify) // Convert each inner array to a string
+                    .filter((value, index, self) => self.indexOf(value) === index) // Keep only the first occurrence of each string
+                    .map(JSON.parse); // Convert each string back to an array
+
+        const payload = {
+            Predicted_Job: uniqueArr
+        }
+        this.setState({ jobsBasedOnPersonalityType: payload});
 
     })
     .catch(error => {
@@ -125,7 +134,7 @@ class AdminBlankPage extends React.Component {
             })
             .then(response => response.json())
             .then(data2 => {
-                alert(`Model: ${model_accuracy}, \nPersonality Type: ${infoData?.personality_type}, \nStatus: ${value===1? "will stay":"will leave"}, Team Capability Score: ${payload?.Team_capability_score}`)
+                // alert(`Model: ${model_accuracy}, \nPersonality Type: ${infoData?.personality_type}, \nStatus: ${value===1? "will stay":"will leave"}, Team Capability Score: ${payload?.Team_capability_score}`)
 
             })
             .catch(error => console.error(error));
@@ -146,80 +155,93 @@ class AdminBlankPage extends React.Component {
   }
     render(){
 
-        const { jobsBasedOnPersonalityType, charactersBasedOnPersonalityType, EmpData } = this.state;
+        const { jobsBasedOnPersonalityType, charactersBasedOnPersonalityType, EmpData, userPermission} = this.state;
+        if(userPermission === "User"){
+            return <>
+                <div>
+            <h1 hidden>RecruIT | Interviewee Details</h1>
 
-        return <>
-<div>
-<h1 hidden>RecruIT | Interviewee Details</h1>
+            <main class="main-wrapper no-sidebar" role="main">
+{/* Amathi ayai can you make a thank you page saying thanks for the response, and they have to wait for their confirmation */}
 
-<main class="main-wrapper no-sidebar" role="main">
-
-    <section class="inner-full-section interviewee">
-        <div class="container-fluid">
-            <div class="row navbar-row">
-                <div class="col-12 col-lg-2 logo">
-                    <figure>
-                        <img src={logo} alt="logo" />
-                    </figure>
-                </div>
-                <div class="col-12 col-lg-10 menu">
-                    {/* <div class="row">
-                        <div class="col-12 col-lg-6">
-                            <h3>Bio Data & His skills according to his personality type</h3>
-                      
-                    </div>
-                </div> */}
+            </main>
             </div>
-            <div class="row">
-                <div class="col-12 col-lg-5 img-block">
-                    <figure>
-                        <img src={interviewee} class="img-fluid" alt="img" />
-                    </figure>
-                </div>
-                <div class="col-12 col-lg-7 form-block">
-                    <div class="row">
-                        
-                        <p><u><b>Bio Data</b></u></p><br/>
-                        <pre>
-                            Email :{EmpData?.email} <br/>
-                            Designation: {EmpData?.designation} <br/>
-                            Civil Status: {EmpData?.civil_status} <br/>
-                            Personality Type: {EmpData?.personality_type} <br/>
-                            Project Team: {EmpData?.project_team} <br/>
-                            status: {EmpData?.status} <br/>
-                        </pre><br/>
+            </>
+        }else{
+             return <>
 
-                        <hr/><br/>
+            <div>
+            <h1 hidden>RecruIT | Interviewee Details</h1>
 
-                        
-                        <p><u><b>Character Shown</b></u></p><br/>
-                        <pre>
-                            {charactersBasedOnPersonalityType?.Predicted_Characters?.map((x,i)=>{
-                                return `${i} ${x} \n`;
-                            })}
-                        </pre><br/>
-                        <hr/><br/>
+            <main class="main-wrapper no-sidebar" role="main">
 
-                        
-                        <p><u><b>Best Job</b></u></p><br/>
-                        <pre>
-                            {jobsBasedOnPersonalityType?.Predicted_Job?.map((x,i)=>{
-                                return `${i} ${x} \n`
-                            })}
-                        </pre><br/> 
-                        <hr/><br/>
+                <section class="inner-full-section interviewee">
+                    <div class="container-fluid">
+                        <div class="row navbar-row">
+                            <div class="col-12 col-lg-2 logo">
+                                <figure>
+                                    <img src={logo} alt="logo" />
+                                </figure>
+                            </div>
+                            <div class="col-12 col-lg-10 menu">
+                                {/* <div class="row">
+                                    <div class="col-12 col-lg-6">
+                                        <h3>Bio Data & His skills according to his personality type</h3>
+                                
+                                </div>
+                            </div> */}
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-lg-5 img-block">
+                                <figure>
+                                    <img src={interviewee} class="img-fluid" alt="img" />
+                                </figure>
+                            </div>
+                            <div class="col-12 col-lg-7 form-block">
+                                <div class="row">
+                                    
+                                    <p><u><b>Bio Data</b></u></p><br/>
+                                    <pre>
+                                        Email :{EmpData?.email} <br/>
+                                        Designation: {EmpData?.designation} <br/>
+                                        Civil Status: {EmpData?.civil_status} <br/>
+                                        Personality Type: {EmpData?.personality_type} <br/>
+                                        Project Team: {EmpData?.project_team} <br/>
+                                        status: {EmpData?.status} <br/>
+                                    </pre><br/>
 
-                        
+                                    <hr/><br/>
+
+                                    
+                                    <p><u><b>Character Shown</b></u></p><br/>
+                                    <pre>
+                                        {charactersBasedOnPersonalityType?.Predicted_Characters?.map((x,i)=>{
+                                            return `${i} ${x} \n`;
+                                        })}
+                                    </pre><br/>
+                                    <hr/><br/>
+
+                                    
+                                    <p><u><b>Best Job</b></u></p><br/>
+                                    <pre>
+                                        {jobsBasedOnPersonalityType?.Predicted_Job?.map((x,i)=>{
+                                            return `${i} ${x} \n`
+                                        })}
+                                    </pre><br/> 
+                                    <hr/><br/>
+
+                                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </section>
+                    </div>
+                </section>
 
-</main>
-</div>
-        </>
+            </main>
+            </div>
+                    </>
+        }
     }
 }
 
