@@ -16,7 +16,8 @@ class AdminBlankPage extends React.Component {
             jobsBasedOnPersonalityType: [],
             charactersBasedOnPersonalityType: [],
             EmpData: [],
-            userPermission : localStorage.getItem("userType")
+            userPermission : localStorage.getItem("userType"),
+            AIResults:[],
 
         }
     }
@@ -134,8 +135,7 @@ class AdminBlankPage extends React.Component {
             })
             .then(response => response.json())
             .then(data2 => {
-                // alert(`Model: ${model_accuracy}, \nPersonality Type: ${infoData?.personality_type}, \nStatus: ${value===1? "will stay":"will leave"}, Team Capability Score: ${payload?.Team_capability_score}`)
-
+                this.setState({AIResults:payload})
             })
             .catch(error => console.error(error));
 
@@ -155,7 +155,8 @@ class AdminBlankPage extends React.Component {
   }
     render(){
 
-        const { jobsBasedOnPersonalityType, charactersBasedOnPersonalityType, EmpData, userPermission} = this.state;
+        const { jobsBasedOnPersonalityType, charactersBasedOnPersonalityType, EmpData, userPermission,AIResults} = this.state;
+        console.log(AIResults)
         if(userPermission === "User"){
             return <>
             <div>
@@ -189,44 +190,60 @@ class AdminBlankPage extends React.Component {
                 <section class="inner-full-section interviewee">
                     <div class="container-fluid">
                         <div class="row navbar-row">
-                        <div class="row">
-                            <div class="col-12 col-lg-7 form-block">
-                                <div class="row">
-                                    
-                                    <p><u><b>Bio Data</b></u></p><br/>
-                                    <div>
-                                       <p>Email:  <strong>{EmpData?.email}</strong></p> <br/>
-                                        <p>Designation:<strong>{EmpData?.designation}</strong></p>  <br/>
-                                        <p>Civil Status: <strong>{EmpData?.civil_status}</strong></p> <br/>
-                                        <p> Personality Type: <strong>{EmpData?.personality_type}</strong></p> <br/>
-                                        <p> Project Team: <strong>{EmpData?.project_team}</strong></p> <br/>
-                                        <p> status: <strong>{EmpData?.status}</strong></p> <br/>
-                                    </div><br/>
-
-                                    <hr/><br/>
-
-                                    
-                                    <p><u><b>Character Shown</b></u></p><br/>
-                                    <pre>
-                                        {charactersBasedOnPersonalityType?.Predicted_Characters?.map((x,i)=>{
-                                            return `${i} ${x} \n`;
-                                        })}
-                                    </pre><br/>
-                                    <hr/><br/>
-
-                                    
-                                    <p><u><b>Best Job</b></u></p><br/>
-                                    <pre>
-                                        {jobsBasedOnPersonalityType?.Predicted_Job?.map((x,i)=>{
-                                            return `${i} ${x} \n`
-                                        })}
-                                    </pre><br/> 
-                                    <hr/><br/>
-
-                                    
-                                </div>
-                            </div>
-                        </div>
+                            <div className="row">
+                            <div className="col-md-3"></div>
+  <div className="col-md-6">
+                     <div class="card " style={AIResults.status === 1 ? {backgroundColor:"green"} : {backgroundColor:"red"}}>
+    <div class="card-body mb5">
+    <center>
+    <h5 class="card-title">AI Score</h5>
+    </center>
+   <p>Team Capability Score: <strong>{AIResults?.Team_capability_score && (AIResults?.Team_capability_score).toFixed(2)} </strong></p>
+   <p>Personality Type: <strong>{AIResults.personality_type} </strong></p>
+   <p>Model Accuracy: <strong>{AIResults?.Team_capability_score && (AIResults?.model_percentage).toFixed(2)} </strong></p>
+    </div>
+                    </div>
+    </div>
+  <div className="col-md-12">
+                     <div class="card blue">
+    <div class="card-body mb5">
+      <h5 class="card-title">Bio Data</h5>
+     
+     <p>Email:  <strong>{EmpData?.email}</strong></p>
+     <p>Designation:<strong>{EmpData?.designation}</strong></p>
+     <p>Civil Status: <strong>{EmpData?.civil_status}</strong></p>
+     {/* <p>Personality Type: <strong>{EmpData?.personality_type}</strong></p> */}
+     <p>Project Team: <strong>{EmpData?.project_team}</strong></p>
+     <p>status: <strong>{EmpData?.status}</strong></p>
+    </div>
+  </div>
+                     </div>
+  
+  
+  <div className="col-md-6">
+                     <div class="card grey">
+    <div class="card-body mb5">
+      <h5 class="card-title">Character Shown</h5>
+     
+      {charactersBasedOnPersonalityType?.Predicted_Characters?.map((x,i)=>{
+            return <p>- {x}</p>;
+        })}
+    </div>
+  </div>
+                     </div>
+                     <div className="col-md-6">
+                     <div class="card grey">
+    <div class="card-body mb5">
+      <h5 class="card-title">Capable Job</h5>
+     
+      {jobsBasedOnPersonalityType?.Predicted_Job?.map((x,i)=>{
+        return <p>- {x}</p>;
+    })}
+    </div>
+  </div>
+                     </div>
+  </div>
+                            
                     </div>
                     </div>
                 </section>

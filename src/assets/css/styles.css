@@ -587,4 +587,20 @@ textarea:-moz-placeholder {
 }
 .card {
   margin-top:15px;
+  max-height: 500px;
+    overflow: auto;
+}
+
+.mb5 p {
+  margin-bottom: 0.5rem!important;
+}
+
+.blue {
+  background: #2E7EEE;
+  color:#fff;
+}
+
+.grey {
+  background: #343640;
+  color:#fff;
 }
