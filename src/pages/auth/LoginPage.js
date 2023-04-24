@@ -54,7 +54,7 @@ class LoginPage extends React.Component {
                                 window.location.replace('/appraisalCopy');
                             }else{
                                 localStorage.setItem('hidden_status', true);
-                                window.location.replace('/home');
+                                window.location.replace('/thank-you');
                             }
                         }else {
                           localStorage.setItem('hidden_status', true);

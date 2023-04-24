@@ -1,6 +1,26 @@
 import React from "react";
 import adminLayout from "../hoc/adminLayout"
 
+const dataOptions = {
+    data1 : [
+        "HTML","CSS","JavaScript","Response Design", "Version Control", "Web Performance Optimization", "BrowserDeveloping Tools", "Build Tools", "UI/UX Design"
+    ],
+    data2 : [
+       "Server-Side Programming Languages","Database","Web services", "APIs", "Version Control", "Security", "Caching", "Scalability", "Cloud Computing", "DevOps"
+    ],
+    data3: [
+        "Cloud Computing Platforms", "Infrastructure as code", "Containers and Orchestration", "Security", "Networking","Serverless Computing","Big Data and Analytics", "DevOps"
+    ],
+    data4: [
+        "SDLC", "Test Planning and Design", "Test Automation","Defect Management", "Performance and Load Testing", "Security Testing", "Industry Standards and Best Practices"
+    ],
+    data5: [
+        "Communication", "Critical Thinking and Problem Solving ", "Business Knowledge", "Data Analysis","Requirements Gathering","Project management", "Stakeholder Management", "Technical Knowledge"
+    ],
+    data6: [
+        "Network Security", "Application Security", "Risk management ", "Security Compliance","Incident Response", "Penetration Testing", "Cryptographs", "Ethical hacking"
+    ]
+}
 class AdminBlankPage extends React.Component {
 
     submitFun= () => {
@@ -13,7 +33,9 @@ class AdminBlankPage extends React.Component {
         const status= document.getElementById('status').value;
         const civilstatus= document.getElementById('civilstatus').value;
         const team= document.getElementById('team').value;
-        const Training= document.getElementById('Training').checked;
+        // const Training= document.getElementById('Training').checked;
+
+        console.log(document.getElementById('Training'))
 
         // Perform validation on each input field
         if (firstname === '') {
@@ -77,23 +99,25 @@ class AdminBlankPage extends React.Component {
             civil_status: civilstatus,
             status: status,
             project_team: team,
-            training_completion: Training,
+            // training_completion: Training,
             health_assessment: 'Excellent'
             };
 
-            fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                
-                window.location.assign("http://localhost:3000/employee-details");
-            })
-            .catch(error => console.error(error));
+
+
+                // fetch(url, {
+                // method: 'POST',
+                // headers: {
+                //     'Content-Type': 'application/json'
+                // },
+                // body: JSON.stringify(userData)
+                // })
+                // .then(response => response.json())
+                // .then(data => {
+                    
+                //     window.location.assign("http://localhost:3000/employee-details");
+                // })
+                // .catch(error => console.error(error));
     
     }
 
@@ -111,7 +135,48 @@ class AdminBlankPage extends React.Component {
     fetch(`http://127.0.0.1:8000/employee_profiles/${localStorageValue}`)
       .then(response => response.json())
       .then(data => {
-        this.setState({ data })
+        this.setState({ data:data })
+
+        switch(data.profile.designation){
+            //
+            case "Frontend Engineer":
+            case "Senior Frontend Engineer":
+            case "SFE":
+            case "FE":
+            case "UX/UI":
+                this.setState({ designationOptions:dataOptions.data1 })
+                break;
+            case "Backend Engineer":
+            case "BE":
+            case "Senior Backend Engineer":
+            case "SBE":
+                this.setState({ designationOptions:dataOptions.data2 })
+                break;
+            case "FullStack Engineer":
+            case "SSE":
+            case "Senior Software Engineer":
+                const value = dataOptions.data1.concat(dataOptions.data2)
+                this.setState({ designationOptions:value })
+                break;
+            case "Cloud Engineer":
+            case "Senior Cloud Engineer":
+                this.setState({ designationOptions:dataOptions.data3 })
+                break;
+            case "QA":
+                this.setState({ designationOptions:dataOptions.data4 })
+                break;
+            case "BA":
+            case "CEO":
+            case "PM":
+            case "Business Analysts" :
+            case "Project Manager":
+                this.setState({ designationOptions:dataOptions.data5 })
+                break;
+            case "Cyber Security":
+                this.setState({ designationOptions:dataOptions.data6 })
+                break;
+        }
+        // this.setState({ designation:data.profile.designation })
       })
       .catch(error => {
         console.log(error);
@@ -121,10 +186,51 @@ class AdminBlankPage extends React.Component {
 
     render(){
 
-        const { data } = this.state;
-        const checkbox = document.querySelector('#Training');
-        if(data?.profile !== null && data?.profile !== undefined){
-            checkbox.checked = data?.profile.training_completion;
+        const { data, designationOptions } = this.state;    
+        // const checkbox = document.querySelector('#Training');
+        // if(data?.profile !== null && data?.profile !== undefined){
+        //     checkbox.checked = data?.profile.training_completion;
+        // }
+        const chnageTrigger = (e) => {
+            switch(e.target.value){
+                //
+                case "Frontend Engineer":
+                case "Senior Frontend Engineer":
+                case "SFE":
+                case "FE":
+                case "UX/UI":
+                    this.setState({ designationOptions:dataOptions.data1 })
+                    break;
+                case "Backend Engineer":
+                case "BE":
+                case "Senior Backend Engineer":
+                case "SBE":
+                    this.setState({ designationOptions:dataOptions.data2 })
+                    break;
+                case "FullStack Engineer":
+                case "SSE":
+                case "Senior Software Engineer":
+                    const value = dataOptions.data1.concat(dataOptions.data2)
+                    this.setState({ designationOptions:value })
+                    break;
+                case "Cloud Engineer":
+                case "Senior Cloud Engineer":
+                    this.setState({ designationOptions:dataOptions.data3 })
+                    break;
+                case "QA":
+                    this.setState({ designationOptions:dataOptions.data4 })
+                    break;
+                case "BA":
+                case "CEO":
+                case "PM":
+                case "Business Analysts" :
+                case "Project Manager":
+                    this.setState({ designationOptions:dataOptions.data5 })
+                    break;
+                case "Cyber Security":
+                    this.setState({ designationOptions:dataOptions.data6 })
+                    break;
+            }
         }
         return <>
 <div>
@@ -165,7 +271,7 @@ class AdminBlankPage extends React.Component {
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label>Designation</label>
-                                <input type="text" id="designation" name="designation" placeholder="Project Manager" defaultValue={data?.profile.designation} required />
+                                <input type="text" id="designation" name="designation" onChange={chnageTrigger} placeholder="Project Manager" defaultValue={data?.profile.designation} required />
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
@@ -199,14 +305,22 @@ class AdminBlankPage extends React.Component {
                                 <input type="text" id="team" name="team" placeholder="Lorem ipsum" defaultValue={data?.profile.project_team} required/>
                             </div>
                         </div>
+                        <hr/>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
                                 <label for="Training">Training Completion</label>
                                 <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="Training" name="Training" value="1" />
-                                <label class="form-check-label" for="Training">
-                                    Completed
-                                </label>
+                                    {designationOptions?.map(x =>{
+                                        return(
+                                            <>
+                                            <input class="form-check-input" type="checkbox" id="Training" name="Training" value={x} />
+                                            <label class="form-check-label" for="Training">
+                                                {x}
+                                            </label>
+                                            </>
+                                        )
+                                    })}
+                                    
                                 </div>
                             </div>
                         </div>

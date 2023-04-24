@@ -158,15 +158,26 @@ class AdminBlankPage extends React.Component {
         const { jobsBasedOnPersonalityType, charactersBasedOnPersonalityType, EmpData, userPermission} = this.state;
         if(userPermission === "User"){
             return <>
-                <div>
+            <div>
             <h1 hidden>RecruIT | Interviewee Details</h1>
-
+            
             <main class="main-wrapper no-sidebar" role="main">
-{/* Amathi ayai can you make a thank you page saying thanks for the response, and they have to wait for their confirmation */}
-
+            
+            <div class="col-12 col-lg-12 form-block">
+                               
+            <div class="jumbotron">
+              <h1 class="display-4">Thank You!</h1>
+              <br/>
+             
+              <hr class="my-4" />
+              <p class="lead">Please wait for the confirmation</p>
+            </div>
+            
+                            </div>
+            
             </main>
             </div>
-            </>
+                    </>
         }else{
              return <>
 
@@ -178,37 +189,19 @@ class AdminBlankPage extends React.Component {
                 <section class="inner-full-section interviewee">
                     <div class="container-fluid">
                         <div class="row navbar-row">
-                            <div class="col-12 col-lg-2 logo">
-                                <figure>
-                                    <img src={logo} alt="logo" />
-                                </figure>
-                            </div>
-                            <div class="col-12 col-lg-10 menu">
-                                {/* <div class="row">
-                                    <div class="col-12 col-lg-6">
-                                        <h3>Bio Data & His skills according to his personality type</h3>
-                                
-                                </div>
-                            </div> */}
-                        </div>
                         <div class="row">
-                            <div class="col-12 col-lg-5 img-block">
-                                <figure>
-                                    <img src={interviewee} class="img-fluid" alt="img" />
-                                </figure>
-                            </div>
                             <div class="col-12 col-lg-7 form-block">
                                 <div class="row">
                                     
                                     <p><u><b>Bio Data</b></u></p><br/>
-                                    <pre>
-                                        Email :{EmpData?.email} <br/>
-                                        Designation: {EmpData?.designation} <br/>
-                                        Civil Status: {EmpData?.civil_status} <br/>
-                                        Personality Type: {EmpData?.personality_type} <br/>
-                                        Project Team: {EmpData?.project_team} <br/>
-                                        status: {EmpData?.status} <br/>
-                                    </pre><br/>
+                                    <div>
+                                       <p>Email:  <strong>{EmpData?.email}</strong></p> <br/>
+                                        <p>Designation:<strong>{EmpData?.designation}</strong></p>  <br/>
+                                        <p>Civil Status: <strong>{EmpData?.civil_status}</strong></p> <br/>
+                                        <p> Personality Type: <strong>{EmpData?.personality_type}</strong></p> <br/>
+                                        <p> Project Team: <strong>{EmpData?.project_team}</strong></p> <br/>
+                                        <p> status: <strong>{EmpData?.status}</strong></p> <br/>
+                                    </div><br/>
 
                                     <hr/><br/>
 
