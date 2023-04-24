@@ -176,6 +176,38 @@ class AdminBlankPage extends React.Component {
                         <img src={interviewee} class="img-fluid" alt="img" />
                     </figure>
                 </div>
+
+<div className="row">
+<div className="col-md-6">
+                   <div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+   
+   <p>Name:</p>
+   <p>Age:</p>
+   <p>Address:</p>
+   <p>Tel:</p>
+   <p>Fax:</p>
+   <p>Email:</p>
+  </div>
+</div>
+                   </div>
+                   <div className="col-md-6">
+                   <div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+   
+   <p>Name:</p>
+   <p>Age:</p>
+   <p>Address:</p>
+   <p>Tel:</p>
+   <p>Fax:</p>
+   <p>Email:</p>
+  </div>
+</div>
+                   </div>
+</div>
+
                 <div class="col-12 col-lg-7 form-block">
                     <div class="row">
                         
