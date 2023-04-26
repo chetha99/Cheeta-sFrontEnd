@@ -33,13 +33,14 @@ const columns = [
     title: 'Status',
     dataIndex: 'status',
     filters: [
-      { text: 'Employed', value: 'employed' },
-      { text: 'Not Employed', value: 'Not Employed' },
+      { text: 'Employed', value: 'Employed' },
+      { text: 'Not Employed', value: 'UnEmployed' },
+      { text: 'Rejected', value: 'Rejected' },
     ],
-    onFilter: (value, record) => record.status.toLowerCase() === value,
+    onFilter: (value, record) => record.status === value,
     render: (status) => (
       <span style={{ 
-        backgroundColor: status.toLowerCase() !== 'employed' ? 'rgba(255, 100, 100, 0.4)' : 'rgba(100, 255, 100, 0.4)' ,
+        backgroundColor: status !== 'Employed' ? status === 'UnEmployed' ? 'rgba(255, 255, 100, 0.4)' : 'rgba(255, 100, 100, 0.4)' : 'rgba(100, 255, 100, 0.4)' ,
         borderRadius: 4,
         padding: '4px 8px',
         display: 'inline-block',

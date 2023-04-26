@@ -123,9 +123,12 @@ class AdminBlankPage extends React.Component {
             status: infoData?.status,
             project_team: infoData?.project_team,
             training_completion: infoData?.training_completion,
-            health_assessment: infoData?.health_assessment
+            health_assessment1: infoData?.health_assessment1,
+            health_assessment2: infoData?.health_assessment2,
+            health_assessment3: infoData?.health_assessment3
             };
 
+            // console.log(userData)
             fetch(url, {
             method: 'POST',
             headers: {

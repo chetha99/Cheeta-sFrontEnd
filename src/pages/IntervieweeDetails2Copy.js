@@ -12,10 +12,11 @@ class AdminBlankPage extends React.Component {
         const designation= document.getElementById('designation').value;
         const personality= document.getElementById('personality').value;
         // const teamcapability= document.getElementById('teamcapability').value;
-        const status= document.getElementById('status').value;
+        const status1= document.getElementById('status1').value;
+        const status2= document.getElementById('status2').value;
         const civilstatus= document.getElementById('civilstatus').value;
         const team= document.getElementById('team').value;
-        // const Training= document.getElementById('Training').checked;
+        const status3= document.getElementById('status3').checked;
 
         // Perform validation on each input field
         if (firstname === '') {
@@ -48,8 +49,12 @@ class AdminBlankPage extends React.Component {
             return;
         }
 
-        if (status === '') {
-            alert('Please enter your status');
+        if (status1 === '') {
+            alert('Please enter your Rre-existing medical conditions');
+            return;
+        }
+        if (status2 === '') {
+            alert('Please enter your mental health conditions');
             return;
         }
 
@@ -75,7 +80,9 @@ class AdminBlankPage extends React.Component {
             status: 'UnEmployed',
             project_team: team,
             training_completion: [],
-            health_assessment: status
+            health_assessment1: status1,
+            health_assessment2: status2,
+            health_assessment3: status3
             };
 
             console.log(userData)
@@ -176,12 +183,7 @@ class AdminBlankPage extends React.Component {
                                 <input type="text" id="teamcapability" name="teamcapability" placeholder="80%" required />
                             </div>
                         </div> */}
-                        <div class="col-12 col-lg-6">
-                            <div class="form-group">
-                                <label>Health Assessment</label>
-                                <input type="text" id="status" name="status" placeholder="Health Assessment" required />
-                            </div>
-                        </div>
+                        
                         
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
@@ -191,22 +193,36 @@ class AdminBlankPage extends React.Component {
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label>Project Team</label>
-                                <input type="text" id="team" name="team" placeholder="Project Team" required/>
+                                {/* <label>Project Team</label> */}
+                                <input type="text" id="team" name="team" placeholder="Project Team" value=" " hidden required/>
                             </div>
                         </div>
-                        {/* <div class="col-12 col-lg-6">
-                        <div class="form-group">
-                        <label for="Training">Training Completion</label>
-                        <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="Training" name="Training" value="1" />
-                        <label class="form-check-label" for="Training">
-                            Completed
-                        </label>
-                        </div>
-                    </div>
-                        </div> */}
-                        
+
+                        <hr/>
+                        <label><b>Health Assessment</b></label>
+
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Do you have any pre-existing medical conditions? Specify if, Yes</label>
+                                <input type="text" id="status1" name="status1" placeholder="Type No or Yes" required />
+                            </div>
+                        </div><br/>
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Do you have history of mental health conditions such as anxiety or depression that could impact your job? Specify if Yes</label>
+                                <input type="text" id="status2" name="status2" placeholder="Type No or Yes" required />
+                            </div>
+                        </div><br/>
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Are you willing to participate in a pre-employement medical check up?</label><br/>
+                                <input class="form-check-input" type="checkbox" id="status3" name="status3" value="1" />
+                                    <label class="form-check-label" for="status3">
+                                        &nbsp;Sure
+                                    </label>
+                            </div>
+                        </div><br/>
+
                         <div class="col-12 btn-col">
                             <input type="submit"  onClick={this.submitFun} class="primary-btn" name="save" value="Save" />
                         </div>

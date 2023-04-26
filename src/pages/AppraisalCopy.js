@@ -15,7 +15,7 @@ const dataOptions = {
         "SDLC", "Test Planning and Design", "Test Automation","Defect Management", "Performance and Load Testing", "Security Testing", "Industry Standards and Best Practices"
     ],
     data5: [
-        "Communication", "Critical Thinking and Problem Solving ", "Business Knowledge", "Data Analysis","Requirements Gathering","Project management", "Stakeholder Management", "Technical Knowledge"
+        "Communication skills workshop","Team building workshop", "Critical Thinking and Problem Solving ", "Business Knowledge", "Data Analysis","Requirements Gathering","Project management", "Stakeholder Management", "Technical Knowledge"
     ],
     data6: [
         "Network Security", "Application Security", "Risk management ", "Security Compliance","Incident Response", "Penetration Testing", "Cryptographs", "Ethical hacking"
@@ -164,6 +164,7 @@ class AdminBlankPage extends React.Component {
                 break;
             case "BA":
             case "CEO":
+            case "Project coordinator":
             case "PM":
             case "Business Analysts" :
             case "Project Manager":
@@ -217,6 +218,7 @@ class AdminBlankPage extends React.Component {
                     break;
                 case "BA":
                 case "CEO":
+                case "Project coordinator":
                 case "PM":
                 case "Business Analysts" :
                 case "Project Manager":

@@ -15,7 +15,7 @@ const dataOptions = {
         "SDLC", "Test Planning and Design", "Test Automation","Defect Management", "Performance and Load Testing", "Security Testing", "Industry Standards and Best Practices"
     ],
     data5: [
-        "Communication", "Critical Thinking and Problem Solving ", "Business Knowledge", "Data Analysis","Requirements Gathering","Project management", "Stakeholder Management", "Technical Knowledge"
+        "Communication skills workshop","Team building workshop","Critical Thinking and Problem Solving ", "Business Knowledge", "Data Analysis","Requirements Gathering","Project management", "Stakeholder Management", "Technical Knowledge"
     ],
     data6: [
         "Network Security", "Application Security", "Risk management ", "Security Compliance","Incident Response", "Penetration Testing", "Cryptographs", "Ethical hacking"
@@ -32,10 +32,11 @@ class AdminBlankPage extends React.Component {
         const teamcapability= document.getElementById('teamcapability').value;
         const status= document.getElementById('status').value;
         const civilstatus= document.getElementById('civilstatus').value;
-        const health_ass= document.getElementById('health_ass').value;
+        const status1= document.getElementById('status1').value;
+        const status2= document.getElementById('status2').value;
+        const status3= document.getElementById('status3').checked;
         const team= document.getElementById('team').value;
 
-        console.log(health_ass)
         // Perform validation on each input field
         if (firstname === '') {
             alert('Please enter your first name');
@@ -99,7 +100,9 @@ class AdminBlankPage extends React.Component {
             status: status,
             project_team: team,
             training_completion: training_data,
-            health_assessment: health_ass
+            health_assessment1: status1,
+            health_assessment2: status2,
+            health_assessment3: status3
             };
 
             // console.log(userData)
@@ -113,8 +116,57 @@ class AdminBlankPage extends React.Component {
                 })
                 .then(response => response.json())
                 .then(data => {
+                    if(data?.profile?.email){
+                        fetch(`http://127.0.0.1:8000/dashboard/${data?.profile?.email}`)
+                        .then(response => response.json())
+                        .then(data2 => {
+                            let workEffort = 1;
+                            if(data?.profile?.project_team === "projectA"){
+                                workEffort = 0.4;
+                            }else if (data?.profile?.project_team === "projectB"){
+                                workEffort = 0.5;
+                            }else if (data?.profile?.project_team === "projectC"){
+                                workEffort = 0.1;
+                            }else{
+                                workEffort = 0;
+                            }
+
+                            const Team_capability_score =  parseFloat((data2?.user?.status*0.7)+parseFloat(data2?.user?.model_percentage*0.0003)+parseFloat(workEffort*0.15));
+
+                            const userData = {
+                                first_name: data?.profile?.first_name,
+                                last_name: data?.profile?.last_name,
+                                email: data?.profile?.email,
+                                Team_capability_score: Team_capability_score*100,
+                                designation: data?.profile?.designation,
+                                personality_type: data?.profile?.personality_type,
+                                civil_status: data?.profile?.civil_status,
+                                status: data?.profile?.status,
+                                project_team: data?.profile?.project_team,
+                                training_completion: data?.profile?.training_completion,
+                                health_assessment1: data?.profile?.health_assessment1,
+                                health_assessment2: data?.profile?.health_assessment2,
+                                health_assessment3: data?.profile?.health_assessment3
+                                };
+
+                                fetch(`http://127.0.0.1:8000/employee_profiles/${data?.profile?.email}`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(userData)
+                                    })
+                                    .then(response => response.json())
+                                    .then(data3 => {
+                                        window.location.assign("http://localhost:3000/employee-details");
+                                    })
+                                    .catch(error => console.error(error));
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                    }
                     
-                    window.location.assign("http://localhost:3000/employee-details");
                 })
                 .catch(error => console.error(error));
     
@@ -129,6 +181,8 @@ class AdminBlankPage extends React.Component {
     componentDidMount() {
         const data = localStorage.getItem('selectedEmployee'); 
         const localStorageValue = data.replace(/"/g, '');
+
+        
 
 
     fetch(`http://127.0.0.1:8000/employee_profiles/${localStorageValue}`)
@@ -166,6 +220,7 @@ class AdminBlankPage extends React.Component {
                 this.setState({ designationOptions:dataOptions.data4 })
                 break;
             case "BA":
+            case "Project coordinator":
             case "CEO":
             case "PM":
             case "Business Analysts" :
@@ -178,6 +233,7 @@ class AdminBlankPage extends React.Component {
         }
         // this.setState({ designation:data.profile.designation })
         this.setState({training_data: data.profile.training_completion});
+        
       })
       .catch(error => {
         console.log(error);
@@ -188,6 +244,9 @@ class AdminBlankPage extends React.Component {
     render(){
 
         const { data, designationOptions,training_data } = this.state; 
+        if (data?.profile?.health_assessment3) {
+            document.getElementById('status3').checked = true;
+          }
 
         const chnageTrigger = (e) => {
             switch(e.target.value){
@@ -220,6 +279,7 @@ class AdminBlankPage extends React.Component {
                     break;
                 case "BA":
                 case "CEO":
+                case "Project coordinator":        
                 case "PM":
                 case "Business Analysts" :
                 case "Project Manager":
@@ -255,14 +315,6 @@ class AdminBlankPage extends React.Component {
             <div class="row">
                 
                 <div class="col-12 col-lg-12 form-block">
-                    {/* <div class="row top-row">
-                        <div class="col-12 col-lg-6 left px-0">
-                            <figure>
-                                <img src={avatar} class="img-fluid" alt="icon" />
-                            </figure>
-                            <span>Adam Kannangara</span>
-                        </div>
-                    </div> */}
                     <div class="row form-inner">
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
@@ -302,14 +354,13 @@ class AdminBlankPage extends React.Component {
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label>Status</label>
-                                <input type="text" id="status" name="status" placeholder="Employed" defaultValue={data?.profile.status} required />
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6">
-                            <div class="form-group">
-                                <label>Health</label>
-                                <input type="text" id="health_ass" name="health_ass" placeholder="health_ass" defaultValue={data?.profile.health_assessment} required />
+                                <label for="status">Status</label>
+                                <select id="status" name="status" class="form-control" required>
+                                    <option value="">Select Option</option>
+                                    {data?.profile.status === "Employed" ? <option value="Employed" selected>Employed</option> : <option value="Employed">Employed</option> }
+                                    {data?.profile.status === "UnEmployed" ? <option value="UnEmployed" selected>UnEmployed</option> : <option value="UnEmployed">UnEmployed</option> }
+                                    {data?.profile.status === "Rejected" ? <option value="Rejected" selected>Rejected</option> : <option value="Rejected">Rejected</option> }
+                                </select>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6">
@@ -320,8 +371,14 @@ class AdminBlankPage extends React.Component {
                         </div>
                         <div class="col-12 col-lg-6">
                             <div class="form-group">
-                                <label>Project Team</label>
-                                <input type="text" id="team" name="team" placeholder="Lorem ipsum" defaultValue={data?.profile.project_team} required/>
+                            <label for="status">Project Team</label>
+                                <select id="team" name="team" class="form-control" required>
+                                    <option value="">Select Option</option>
+                                    {data?.profile.project_team === "projectA" ? <option value="projectA" selected>projectA</option> : <option value="projectA">projectA</option> }
+                                    {data?.profile.project_team === "projectB" ? <option value="projectB" selected>projectB</option> : <option value="projectB">projectB</option> }
+                                    {data?.profile.project_team === "projectC" ? <option value="projectC" selected>projectC</option> : <option value="projectC">projectC</option> }
+                                </select>
+                                {/* <input type="text" id="team" name="team" placeholder="Lorem ipsum" defaultValue={data?.profile.project_team} required/> */}
                             </div>
                         </div>
                         <hr/>
@@ -349,6 +406,32 @@ class AdminBlankPage extends React.Component {
                                     })}
                                     
                                 </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        
+
+                        <label><b>Health Assessment</b></label>
+
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Do you have any pre-existing medical conditions? Specify if, Yes</label>
+                                <input type="text" id="status1" name="status1" placeholder="Type No or Yes" defaultValue={data?.profile.health_assessment1} required />
+                            </div>
+                        </div><br/>
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Do you have history of mental health conditions such as anxiety or depression that could impact your job? Specify if Yes</label>
+                                <input type="text" id="status2" name="status2" placeholder="Type No or Yes" defaultValue={data?.profile.health_assessment2} required />
+                            </div>
+                        </div><br/>
+                        <div class="col-12 col-lg-12">
+                            <div class="form-group">
+                                <label>Are you willing to participate in a pre-employement medical check up?</label><br/>
+                                <input class="form-check-input" type="checkbox" id="status3" name="status3" value="1"/>
+                                    <label class="form-check-label" for="status3">
+                                        &nbsp;Sure
+                                    </label>
                             </div>
                         </div>
                         

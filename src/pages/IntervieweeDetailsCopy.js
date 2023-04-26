@@ -58,8 +58,8 @@ class AdminBlankPage extends React.Component {
                             <p>We believe in compatibility between teams and new team members. <br/>Let’s assess whether you and our team are compatible in few simple steps. However the final<br/> decision of<br/> your recruitment will be taken by the recruitment team. <br/>Good Luck!</p>
                         </div>
                         <div class="col-12 content-col type-two">
-                            <p>Follow the below link to access the personality assessment. Provide the personality type<br/> generated at the 
-end of the<br/> assessment at the end of the test below.<br/><a href="#">Link</a></p>
+                        <p>Follow the below link to access the personality assessment. Provide the personality type<br/> generated at the 
+end of the<br/> assessment at the end of the test below. <br/> <a href="https://www.16personalities.com/free-personality-test" target="_blank"> <b> <u> Link </u> </b>  </a> </p>
                         </div>
                         <div class="col-12 col-lg-4 btn-col">
                             {/* <form> */}
